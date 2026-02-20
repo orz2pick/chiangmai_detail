@@ -3,204 +3,2202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>清迈旅行全分项明细账单</title>
+    <title>清迈8日旅行消费明细</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
-        body { font-family: 'Noto Sans SC', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        .day-card { background: white; border-radius: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; overflow: hidden; }
-        .item-container { padding: 0.85rem 1.25rem; border-bottom: 1px solid #f1f5f9; }
-        .item-container:last-child { border-bottom: none; }
-        .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .item-label { display: flex; align-items: center; gap: 8px; }
-        .progress-bg { height: 6px; background: #f1f5f9; border-radius: 99px; width: 100%; }
-        .progress-fill { height: 100%; border-radius: 99px; transition: width 0.8s ease-in-out; }
-        
-        /* 颜色分类 */
-        .fill-food { background-color: #fbbf24; }
-        .fill-shopping { background-color: #34d399; }
-        .fill-transport { background-color: #60a5fa; }
-        .fill-ent { background-color: #a78bfa; }
-        .fill-medical { background-color: #f87171; }
-        .fill-default { background-color: #94a3b8; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body { font-family: 'Noto Sans SC', sans-serif; background-color: #f8fafc; }
+        .day-card { background: white; border-radius: 1.5rem; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); margin-bottom: 2rem; overflow: hidden; transition: transform 0.3s; }
+        .day-card:hover { transform: translateY(-5px); }
+        .item-row { display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 1.25rem; border-bottom: 1px solid #f1f5f9; transition: background 0.2s; }
+        .item-row:hover { background: #f8fafc; }
+        .item-row:last-child { border-bottom: none; }
+        .category-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+        .progress-bg { height: 3px; background: #e2e8f0; border-radius: 2px; margin-top: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 2px; transition: width 0.8s ease-out; }
+        .icon-box { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-right: 12px; background: #f1f5f9; }
+        .amount-box { text-align: right; }
+        .thb-amount { font-weight: 700; color: #1e293b; font-size: 15px; }
+        .cny-amount { color: #94a3b8; font-size: 12px; margin-top: 2px; }
+        .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; margin-left: 6px; }
+        .badge-thb { background: #dbeafe; color: #1d4ed8; }
+        .badge-cny { background: #fce7f3; color: #be185d; }
+        .summary-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 1.5rem; padding: 2rem; margin-bottom: 2rem; text-align: center; }
     </style>
+<base target="_blank">
 </head>
 <body class="p-4 md:p-8">
-    <div class="max-w-2xl mx-auto">
-        <header class="text-center mb-8">
-            <h1 class="text-2xl font-bold text-slate-800">清迈 8 日消费视觉清单</h1>
-            <p class="text-slate-500 text-sm mt-1">含图标分类 · 双币对照 · 1 THB ≈ 0.2237 CNY</p>
+    <div class="max-w-3xl mx-auto">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">🌴 清迈 8 日消费明细</h1>
+            <p class="text-slate-500">2026年2月12日 - 2月19日 · 汇率 1 THB = 0.2237 CNY</p>
         </header>
 
-        <!-- 2月19日 -->
+        <div class="summary-card">
+            <div class="text-sm opacity-80 mb-2">8日总消费</div>
+            <div class="text-4xl font-bold mb-1">35,381 <span class="text-xl">THB</span></div>
+            <div class="text-xl opacity-90">≈ ¥7,915 人民币</div>
+            <div class="mt-4 pt-4 border-t border-white/20 text-sm">
+                日均 ¥989 · 共 108 笔消费
+            </div>
+        </div>
+
         <div class="day-card">
-            <div class="bg-emerald-600 p-4 text-white flex justify-between items-end">
+            <div class="p-4 text-white flex justify-between items-center" style="background: #059669">
                 <div>
-                    <p class="text-emerald-100 text-xs uppercase tracking-wider">Feb 19</p>
-                    <h2 class="font-bold text-lg">终极一日与按摩</h2>
+                    <h2 class="font-bold text-lg">2月19日</h2>
+                    <p class="text-xs opacity-90">粘粘瀑布+豪华按摩</p>
                 </div>
                 <div class="text-right">
-                    <span class="font-mono font-bold text-xl block">9,551 ฿</span>
-                    <span class="text-xs text-emerald-100 opacity-80">约 ¥2,136.6</span>
+                    <div class="font-mono font-bold text-xl">9,551 ฿</div>
+                    <div class="text-xs opacity-80">¥2,137</div>
                 </div>
             </div>
-            <div class="py-2">
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>💰</span> 豪华按摩 (SPA)</div>
-                        <div class="text-right text-xs font-mono">4,343 ฿ <span class="text-slate-400 ml-1">¥971.5</span></div>
+            <div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #a78bfa20;">🎭</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">粘粘瀑布+大象咖啡一日游</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 12.7%; background: #a78bfa"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-default" style="width: 45.4%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">1,209 ฿</div>
+                        <div class="cny-amount">¥270.5</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>💰</span> 一日游 (瀑布大象)</div>
-                        <div class="text-right text-xs font-mono">1,209 ฿ <span class="text-slate-400 ml-1">¥270.5</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">手机防水袋2个+柚子</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.3%; background: #34d399"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-default" style="width: 12.6%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">120 ฿</div>
+                        <div class="cny-amount">¥26.8</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>💰</span> 网球场费用</div>
-                        <div class="text-right text-xs font-mono">1,110 ฿ <span class="text-slate-400 ml-1">¥248.3</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">两个柚子+虾片</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.3%; background: #f87171"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-default" style="width: 11.6%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">125 ฿</div>
+                        <div class="cny-amount">¥28.0</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🍜</span> 披萨晚餐</div>
-                        <div class="text-right text-xs font-mono">990 ฿ <span class="text-slate-400 ml-1">¥221.5</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #a78bfa20;">🎭</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">豪华按摩</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 45.5%; background: #a78bfa"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-food" style="width: 10.3%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">4,343 ฿</div>
+                        <div class="cny-amount">¥971.6</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🛍️</span> 买衣服</div>
-                        <div class="text-right text-xs font-mono">990 ฿ <span class="text-slate-400 ml-1">¥221.5</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">买衣服</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 10.4%; background: #34d399"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-shopping" style="width: 10.3%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">990 ฿</div>
+                        <div class="cny-amount">¥221.5</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🚕</span> 当日打车汇总</div>
-                        <div class="text-right text-xs font-mono">364 ฿ <span class="text-slate-400 ml-1">¥81.4</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">买袜子</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.1%; background: #34d399"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-transport" style="width: 3.8%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">200 ฿</div>
+                        <div class="cny-amount">¥44.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去披萨店</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.1%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">102 ฿</div>
+                        <div class="cny-amount">¥22.8</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">披萨</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 10.4%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">990 ฿</div>
+                        <div class="cny-amount">¥221.5</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去网球场</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.6%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">58 ฿</div>
+                        <div class="cny-amount">¥13.0</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #818cf820;">🎾</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">网球场</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 11.6%; background: #818cf8"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">1,110 ฿</div>
+                        <div class="cny-amount">¥248.3</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车回酒店</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.1%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">204 ฿</div>
+                        <div class="cny-amount">¥45.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fb923c20;">🍊</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">柚子*3+西瓜</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.0%; background: #fb923c"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">100 ฿</div>
+                        <div class="cny-amount">¥22.4</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2月14日 (重点展示图标逻辑) -->
         <div class="day-card">
-            <div class="bg-indigo-600 p-4 text-white flex justify-between items-end">
+            <div class="p-4 text-white flex justify-between items-center" style="background: #ea580c">
                 <div>
-                    <p class="text-indigo-100 text-xs uppercase tracking-wider">Feb 14</p>
-                    <h2 class="font-bold text-lg">竹子市场狂购</h2>
+                    <h2 class="font-bold text-lg">2月18日</h2>
+                    <p class="text-xs opacity-90">网球+米其林Kiew Kai Ka</p>
                 </div>
                 <div class="text-right">
-                    <span class="font-mono font-bold text-xl block">6,589 ฿</span>
-                    <span class="text-xs text-indigo-100 opacity-80">约 ¥1,473.9</span>
+                    <div class="font-mono font-bold text-xl">3,604 ฿</div>
+                    <div class="text-xs opacity-80">¥806</div>
                 </div>
             </div>
-            <div class="py-2">
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🛍️</span> Maya 买衣服</div>
-                        <div class="text-right text-xs font-mono">1,413 ฿ <span class="text-slate-400 ml-1">¥316.1</span></div>
+            <div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去网球场</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.7%; background: #60a5fa"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-shopping" style="width: 21.4%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">98 ฿</div>
+                        <div class="cny-amount">¥21.9</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🍜</span> 早餐与集市小吃</div>
-                        <div class="text-right text-xs font-mono">1,292 ฿ <span class="text-slate-400 ml-1">¥289.0</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去Nana Bakery</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.9%; background: #60a5fa"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-food" style="width: 19.6%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">70 ฿</div>
+                        <div class="cny-amount">¥15.7</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🛍️</span> 超市购物清单</div>
-                        <div class="text-right text-xs font-mono">946 ฿ <span class="text-slate-400 ml-1">¥211.6</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">早餐</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 20.6%; background: #fbbf24"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-shopping" style="width: 14.3%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">744 ฿</div>
+                        <div class="cny-amount">¥166.4</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🚕</span> 交通汇总 (突突车/打车)</div>
-                        <div class="text-right text-xs font-mono">677 ฿ <span class="text-slate-400 ml-1">¥151.4</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去Kiew Kai Ka</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.1%; background: #60a5fa"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-transport" style="width: 10.3%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">77 ฿</div>
+                        <div class="cny-amount">¥17.2</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🎬</span> 奈飞费用</div>
-                        <div class="text-right text-xs font-mono">220 ฿ <span class="text-slate-400 ml-1">¥49.2</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">午饭Kiew Kai Ka</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 38.7%; background: #fbbf24"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-ent" style="width: 3.3%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">1,394 ฿</div>
+                        <div class="cny-amount">¥311.8</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>💊</span> 药店支出</div>
-                        <div class="text-right text-xs font-mono">160 ฿ <span class="text-slate-400 ml-1">¥35.8</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">木头刮板</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.5%; background: #34d399"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-medical" style="width: 2.4%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">55 ฿</div>
+                        <div class="cny-amount">¥12.3</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🍜</span> 榴莲</div>
-                        <div class="text-right text-xs font-mono">392 ฿ <span class="text-slate-400 ml-1">¥87.7</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车回Cafe</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.9%; background: #60a5fa"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-food" style="width: 5.9%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">31 ฿</div>
+                        <div class="cny-amount">¥6.9</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label text-sm font-medium"><span>🛍️</span> 裙子 (竹子市场)</div>
-                        <div class="text-right text-xs font-mono">500 ฿ <span class="text-slate-400 ml-1">¥111.8</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去网球</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.1%; background: #60a5fa"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-shopping" style="width: 7.6%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">41 ฿</div>
+                        <div class="cny-amount">¥9.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #818cf820;">🎾</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">网球</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 25.0%; background: #818cf8"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">900 ฿</div>
+                        <div class="cny-amount">¥201.3</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">1瓶水</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.3%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">10 ฿</div>
+                        <div class="cny-amount">¥2.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车吃燕窝</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.2%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">43 ฿</div>
+                        <div class="cny-amount">¥9.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">燕窝</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.2%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">80 ฿</div>
+                        <div class="cny-amount">¥17.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车回Cafe</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.1%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">39 ฿</div>
+                        <div class="cny-amount">¥8.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">两瓶水</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.6%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">22 ฿</div>
+                        <div class="cny-amount">¥4.9</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2月18日 -->
         <div class="day-card">
-            <div class="bg-orange-500 p-4 text-white flex justify-between items-end">
+            <div class="p-4 text-white flex justify-between items-center" style="background: #0284c7">
                 <div>
-                    <p class="text-orange-100 text-xs uppercase tracking-wider">Feb 18</p>
-                    <h2 class="font-bold text-lg">网球与精致泰菜</h2>
+                    <h2 class="font-bold text-lg">2月17日</h2>
+                    <p class="text-xs opacity-90">网球课+燕窝</p>
                 </div>
                 <div class="text-right">
-                    <span class="font-mono font-bold text-xl block">3,604 ฿</span>
-                    <span class="text-xs text-orange-100 opacity-80">约 ¥806.2</span>
+                    <div class="font-mono font-bold text-xl">2,559 ฿</div>
+                    <div class="text-xs opacity-80">¥572</div>
                 </div>
             </div>
-            <div class="py-2 text-sm">
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label"><span>🍜</span> 午餐 @ Kiew Kai Ka</div>
-                        <div class="font-mono text-xs">1,394 ฿ <span class="text-slate-400 ml-1">¥311.8</span></div>
+            <div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">烤猪肉片</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.2%; background: #fbbf24"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-food" style="width: 38.6%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">5 ฿</div>
+                        <div class="cny-amount">¥1.1</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label"><span>💰</span> 网球课费用</div>
-                        <div class="font-mono text-xs">900 ฿ <span class="text-slate-400 ml-1">¥201.3</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">三明治</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.0%; background: #fbbf24"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-default" style="width: 24.9%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">25 ฿</div>
+                        <div class="cny-amount">¥5.6</div>
+                    </div>
                 </div>
-                <div class="item-container">
-                    <div class="item-header">
-                        <div class="item-label"><span>🚕</span> 当日 7 次打车</div>
-                        <div class="font-mono text-xs">399 ฿ <span class="text-slate-400 ml-1">¥89.3</span></div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">豆浆</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.3%; background: #22d3ee"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="progress-bg"><div class="progress-fill fill-transport" style="width: 11.0%"></div></div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">7 ฿</div>
+                        <div class="cny-amount">¥1.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">椰子水2瓶</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.5%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">39 ฿</div>
+                        <div class="cny-amount">¥8.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车到餐厅(2人)</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.2%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">56 ฿</div>
+                        <div class="cny-amount">¥12.5</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">吃饭</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 29.3%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">750 ฿</div>
+                        <div class="cny-amount">¥167.8</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">冰激凌</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 9.8%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">250 ฿</div>
+                        <div class="cny-amount">¥55.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车回来</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.9%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">49 ฿</div>
+                        <div class="cny-amount">¥10.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去网球场(2人)</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.3%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">84 ฿</div>
+                        <div class="cny-amount">¥18.8</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #818cf820;">🎾</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">网球课</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 43.0%; background: #818cf8"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">1,100 ฿</div>
+                        <div class="cny-amount">¥246.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">1瓶水</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.4%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">10 ฿</div>
+                        <div class="cny-amount">¥2.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车吃燕窝</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.7%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">43 ฿</div>
+                        <div class="cny-amount">¥9.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">燕窝</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.1%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">80 ฿</div>
+                        <div class="cny-amount">¥17.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车回Epilogue</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.5%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">39 ฿</div>
+                        <div class="cny-amount">¥8.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">两瓶水</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.9%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">22 ฿</div>
+                        <div class="cny-amount">¥4.9</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <footer class="text-center text-slate-400 text-xs py-8">
-            数据已根据关键词自动分类并匹配图标。
+        <div class="day-card">
+            <div class="p-4 text-white flex justify-between items-center" style="background: #7c3aed">
+                <div>
+                    <h2 class="font-bold text-lg">2月16日</h2>
+                    <p class="text-xs opacity-90">马杀鸡+红酒+超市</p>
+                </div>
+                <div class="text-right">
+                    <div class="font-mono font-bold text-xl">2,172 ฿</div>
+                    <div class="text-xs opacity-80">¥486</div>
+                </div>
+            </div>
+            <div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">咖啡</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 4.1%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">90 ฿</div>
+                        <div class="cny-amount">¥20.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #a78bfa20;">🎭</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">马杀鸡</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 29.9%; background: #a78bfa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">650 ฿</div>
+                        <div class="cny-amount">¥145.4</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">泰tea</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.1%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">45 ฿</div>
+                        <div class="cny-amount">¥10.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">红酒</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 8.3%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">180 ฿</div>
+                        <div class="cny-amount">¥40.3</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">MAYA超市</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 38.2%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">830 ฿</div>
+                        <div class="cny-amount">¥185.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">薯条</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.1%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">46 ฿</div>
+                        <div class="cny-amount">¥10.4</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #94a3b820;">💊</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">药品</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 11.4%; background: #94a3b8"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">247 ฿</div>
+                        <div class="cny-amount">¥55.3</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">Grab打车</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.9%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">62 ฿</div>
+                        <div class="cny-amount">¥13.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">两瓶水</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.0%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">21 ฿</div>
+                        <div class="cny-amount">¥4.7</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="p-4 text-white flex justify-between items-center" style="background: #2563eb">
+                <div>
+                    <h2 class="font-bold text-lg">2月15日</h2>
+                    <p class="text-xs opacity-90">塔佩门+日料+泰餐课</p>
+                </div>
+                <div class="text-right">
+                    <div class="font-mono font-bold text-xl">2,879 ฿</div>
+                    <div class="text-xs opacity-80">¥644</div>
+                </div>
+            </div>
+            <div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">水两瓶</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.8%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">22 ฿</div>
+                        <div class="cny-amount">¥4.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去塔佩门</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.8%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">108 ฿</div>
+                        <div class="cny-amount">¥24.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车回高德</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.9%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">83 ฿</div>
+                        <div class="cny-amount">¥18.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f472b620;">🧴</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">眼镜布</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.3%; background: #f472b6"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">8 ฿</div>
+                        <div class="cny-amount">¥1.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">日料(三文鱼+毛豆+沙拉+咖喱)</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 19.8%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">571 ฿</div>
+                        <div class="cny-amount">¥127.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fb923c20;">🍊</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">榴莲</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 11.8%; background: #fb923c"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">340 ฿</div>
+                        <div class="cny-amount">¥76.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">草莓冰淇淋</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.4%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">99 ฿</div>
+                        <div class="cny-amount">¥22.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #a78bfa20;">🎭</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">预定泰餐课程</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 57.2%; background: #a78bfa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">1,648 ฿</div>
+                        <div class="cny-amount">¥368.6</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="p-4 text-white flex justify-between items-center" style="background: #4f46e5">
+                <div>
+                    <h2 class="font-bold text-lg">2月14日</h2>
+                    <p class="text-xs opacity-90">竹子周六市场+购物</p>
+                </div>
+                <div class="text-right">
+                    <div class="font-mono font-bold text-xl">6,589 ฿</div>
+                    <div class="text-xs opacity-80">¥1,474</div>
+                </div>
+            </div>
+            <div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去球场</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.2%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">81 ฿</div>
+                        <div class="cny-amount">¥18.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去竹子周六市场</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.8%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">116 ฿</div>
+                        <div class="cny-amount">¥25.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">荷叶包</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.3%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">20 ฿</div>
+                        <div class="cny-amount">¥4.5</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">猪肉粥</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.8%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">50 ฿</div>
+                        <div class="cny-amount">¥11.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">沙拉</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.8%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">55 ฿</div>
+                        <div class="cny-amount">¥12.3</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">橙子百香果汁</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.8%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">50 ฿</div>
+                        <div class="cny-amount">¥11.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fb923c20;">🍊</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">小柿子</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.8%; background: #fb923c"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">50 ฿</div>
+                        <div class="cny-amount">¥11.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">有机牛奶</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.7%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">45 ฿</div>
+                        <div class="cny-amount">¥10.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">面包</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.6%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">236 ฿</div>
+                        <div class="cny-amount">¥52.8</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">布丁+酸奶</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.2%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">80 ฿</div>
+                        <div class="cny-amount">¥17.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">裙子</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 7.6%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">500 ฿</div>
+                        <div class="cny-amount">¥111.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">笔记本</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 4.2%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">280 ฿</div>
+                        <div class="cny-amount">¥62.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">咖啡</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.6%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">170 ฿</div>
+                        <div class="cny-amount">¥38.0</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">巧克力面包*2</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.5%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">96 ฿</div>
+                        <div class="cny-amount">¥21.5</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">双条车回Epilogue</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.1%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">140 ฿</div>
+                        <div class="cny-amount">¥31.3</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #a78bfa20;">🎭</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">奈飞会员</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.9%; background: #a78bfa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">57 ฿</div>
+                        <div class="cny-amount">¥12.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">摩的去Maya(2人)</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.4%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">90 ฿</div>
+                        <div class="cny-amount">¥20.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">吃饭</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.9%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">258 ฿</div>
+                        <div class="cny-amount">¥57.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #94a3b820;">💊</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">驱蚊药+口腔溃疡药</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.5%; background: #94a3b8"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">230 ฿</div>
+                        <div class="cny-amount">¥51.4</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">买衣服(支付宝)</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 21.4%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">1,413 ฿</div>
+                        <div class="cny-amount">¥316.0</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f472b620;">🧴</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">面膜</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.8%; background: #f472b6"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">183 ฿</div>
+                        <div class="cny-amount">¥41.0</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">买衣服(现金)</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 11.8%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">780 ฿</div>
+                        <div class="cny-amount">¥174.5</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">超市购物</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 14.4%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">946 ฿</div>
+                        <div class="cny-amount">¥211.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fb923c20;">🍊</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">榴莲</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 5.9%; background: #fb923c"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">392 ฿</div>
+                        <div class="cny-amount">¥87.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">突突车</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.8%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">250 ฿</div>
+                        <div class="cny-amount">¥55.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">水2瓶</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.3%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">22 ฿</div>
+                        <div class="cny-amount">¥4.9</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="p-4 text-white flex justify-between items-center" style="background: #e11d48">
+                <div>
+                    <h2 class="font-bold text-lg">2月13日</h2>
+                    <p class="text-xs opacity-90">Lanna文化+拍照</p>
+                </div>
+                <div class="text-right">
+                    <div class="font-mono font-bold text-xl">4,251 ฿</div>
+                    <div class="text-xs opacity-80">¥951</div>
+                </div>
+            </div>
+            <div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">早饭</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 6.1%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">259 ฿</div>
+                        <div class="cny-amount">¥57.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去Lanna</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.1%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">89 ฿</div>
+                        <div class="cny-amount">¥19.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">椰子水3瓶</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.8%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">75 ฿</div>
+                        <div class="cny-amount">¥16.8</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #a78bfa20;">🎭</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">拍照服务</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 52.6%; background: #a78bfa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">2,235 ฿</div>
+                        <div class="cny-amount">¥500.0</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #c084fc20;">🎫</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">Lanna门票</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 7.1%; background: #c084fc"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">300 ฿</div>
+                        <div class="cny-amount">¥67.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车去Kaosoy</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.4%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">104 ฿</div>
+                        <div class="cny-amount">¥23.3</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #22d3ee20;">🥤</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">泰茶</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.8%; background: #22d3ee"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">75 ฿</div>
+                        <div class="cny-amount">¥16.8</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">晚饭咖喱面+芒果饭</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 12.7%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">540 ฿</div>
+                        <div class="cny-amount">¥120.8</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f472b620;">🧴</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">711护发油等</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 7.0%; background: #f472b6"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">296 ฿</div>
+                        <div class="cny-amount">¥66.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车回Epilogue(第一次)</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.2%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">136 ฿</div>
+                        <div class="cny-amount">¥30.4</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">打车回Epilogue(第二次)</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.0%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">86 ฿</div>
+                        <div class="cny-amount">¥19.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">711水+薯片</span>
+                                <span class="badge badge-cny">CNY</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.1%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">46 ฿</div>
+                        <div class="cny-amount">¥10.3</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">玉米</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 0.2%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">10 ฿</div>
+                        <div class="cny-amount">¥2.2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="p-4 text-white flex justify-between items-center" style="background: #475569">
+                <div>
+                    <h2 class="font-bold text-lg">2月12日</h2>
+                    <p class="text-xs opacity-90">抵达+宁曼路</p>
+                </div>
+                <div class="text-right">
+                    <div class="font-mono font-bold text-xl">3,776 ฿</div>
+                    <div class="text-xs opacity-80">¥845</div>
+                </div>
+            </div>
+            <div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">机场→酒店打车</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 7.6%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">288 ฿</div>
+                        <div class="cny-amount">¥64.4</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">酒店→邓丽君餐厅</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.4%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">92 ฿</div>
+                        <div class="cny-amount">¥20.6</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #60a5fa20;">🚕</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">邓丽君餐厅→酒店</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.3%; background: #60a5fa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">86 ฿</div>
+                        <div class="cny-amount">¥19.2</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #fbbf2420;">🍜</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">Pizza My Heart</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 22.0%; background: #fbbf24"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">830 ฿</div>
+                        <div class="cny-amount">¥185.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">Elephant Poopoopaper</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 3.2%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">120 ฿</div>
+                        <div class="cny-amount">¥26.8</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">Soap for Soul手工皂</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 17.7%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">670 ฿</div>
+                        <div class="cny-amount">¥149.9</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #34d39920;">🛍️</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">Beak Design设计店</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 25.2%; background: #34d399"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">952 ฿</div>
+                        <div class="cny-amount">¥213.0</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">7-Eleven第一次</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 2.6%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">99 ฿</div>
+                        <div class="cny-amount">¥22.1</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #f8717120;">🍪</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">7-Eleven第二次</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 1.0%; background: #f87171"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">39 ฿</div>
+                        <div class="cny-amount">¥8.7</div>
+                    </div>
+                </div>
+
+                <div class="item-row">
+                    <div class="flex items-center flex-1">
+                        <div class="icon-box" style="background: #a78bfa20;">🎭</div>
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-slate-700">泰式按摩</span>
+                                <span class="badge badge-thb">THB</span>
+                            </div>
+                            <div class="progress-bg">
+                                <div class="progress-fill" style="width: 15.9%; background: #a78bfa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount-box ml-4">
+                        <div class="thb-amount">600 ฿</div>
+                        <div class="cny-amount">¥134.2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-slate-400 text-sm py-8">
+            <p>📊 全部数据按实际账单整理 · 分类图标直观展示消费类型</p>
+            <p class="mt-2">🍜餐饮 🚕交通 🛍️购物 🎭娱乐 🎾运动 🍊水果 💊药品 🧴日用</p>
         </footer>
     </div>
 </body>
