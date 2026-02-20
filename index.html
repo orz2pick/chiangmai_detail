@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清迈旅行全分项明细账单</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans SC', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .day-card { background: white; border-radius: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; overflow: hidden; }
+        .item-container { padding: 0.85rem 1.25rem; border-bottom: 1px solid #f1f5f9; }
+        .item-container:last-child { border-bottom: none; }
+        .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .item-label { display: flex; align-items: center; gap: 8px; }
+        .progress-bg { height: 6px; background: #f1f5f9; border-radius: 99px; width: 100%; }
+        .progress-fill { height: 100%; border-radius: 99px; transition: width 0.8s ease-in-out; }
+        
+        /* 颜色分类 */
+        .fill-food { background-color: #fbbf24; }
+        .fill-shopping { background-color: #34d399; }
+        .fill-transport { background-color: #60a5fa; }
+        .fill-ent { background-color: #a78bfa; }
+        .fill-medical { background-color: #f87171; }
+        .fill-default { background-color: #94a3b8; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-2xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-slate-800">清迈 8 日消费视觉清单</h1>
+            <p class="text-slate-500 text-sm mt-1">含图标分类 · 双币对照 · 1 THB ≈ 0.2237 CNY</p>
+        </header>
+
+        <!-- 2月19日 -->
+        <div class="day-card">
+            <div class="bg-emerald-600 p-4 text-white flex justify-between items-end">
+                <div>
+                    <p class="text-emerald-100 text-xs uppercase tracking-wider">Feb 19</p>
+                    <h2 class="font-bold text-lg">终极一日与按摩</h2>
+                </div>
+                <div class="text-right">
+                    <span class="font-mono font-bold text-xl block">9,551 ฿</span>
+                    <span class="text-xs text-emerald-100 opacity-80">约 ¥2,136.6</span>
+                </div>
+            </div>
+            <div class="py-2">
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>💰</span> 豪华按摩 (SPA)</div>
+                        <div class="text-right text-xs font-mono">4,343 ฿ <span class="text-slate-400 ml-1">¥971.5</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-default" style="width: 45.4%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>💰</span> 一日游 (瀑布大象)</div>
+                        <div class="text-right text-xs font-mono">1,209 ฿ <span class="text-slate-400 ml-1">¥270.5</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-default" style="width: 12.6%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>💰</span> 网球场费用</div>
+                        <div class="text-right text-xs font-mono">1,110 ฿ <span class="text-slate-400 ml-1">¥248.3</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-default" style="width: 11.6%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🍜</span> 披萨晚餐</div>
+                        <div class="text-right text-xs font-mono">990 ฿ <span class="text-slate-400 ml-1">¥221.5</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-food" style="width: 10.3%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🛍️</span> 买衣服</div>
+                        <div class="text-right text-xs font-mono">990 ฿ <span class="text-slate-400 ml-1">¥221.5</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-shopping" style="width: 10.3%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🚕</span> 当日打车汇总</div>
+                        <div class="text-right text-xs font-mono">364 ฿ <span class="text-slate-400 ml-1">¥81.4</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-transport" style="width: 3.8%"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2月14日 (重点展示图标逻辑) -->
+        <div class="day-card">
+            <div class="bg-indigo-600 p-4 text-white flex justify-between items-end">
+                <div>
+                    <p class="text-indigo-100 text-xs uppercase tracking-wider">Feb 14</p>
+                    <h2 class="font-bold text-lg">竹子市场狂购</h2>
+                </div>
+                <div class="text-right">
+                    <span class="font-mono font-bold text-xl block">6,589 ฿</span>
+                    <span class="text-xs text-indigo-100 opacity-80">约 ¥1,473.9</span>
+                </div>
+            </div>
+            <div class="py-2">
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🛍️</span> Maya 买衣服</div>
+                        <div class="text-right text-xs font-mono">1,413 ฿ <span class="text-slate-400 ml-1">¥316.1</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-shopping" style="width: 21.4%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🍜</span> 早餐与集市小吃</div>
+                        <div class="text-right text-xs font-mono">1,292 ฿ <span class="text-slate-400 ml-1">¥289.0</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-food" style="width: 19.6%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🛍️</span> 超市购物清单</div>
+                        <div class="text-right text-xs font-mono">946 ฿ <span class="text-slate-400 ml-1">¥211.6</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-shopping" style="width: 14.3%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🚕</span> 交通汇总 (突突车/打车)</div>
+                        <div class="text-right text-xs font-mono">677 ฿ <span class="text-slate-400 ml-1">¥151.4</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-transport" style="width: 10.3%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🎬</span> 奈飞费用</div>
+                        <div class="text-right text-xs font-mono">220 ฿ <span class="text-slate-400 ml-1">¥49.2</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-ent" style="width: 3.3%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>💊</span> 药店支出</div>
+                        <div class="text-right text-xs font-mono">160 ฿ <span class="text-slate-400 ml-1">¥35.8</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-medical" style="width: 2.4%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🍜</span> 榴莲</div>
+                        <div class="text-right text-xs font-mono">392 ฿ <span class="text-slate-400 ml-1">¥87.7</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-food" style="width: 5.9%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label text-sm font-medium"><span>🛍️</span> 裙子 (竹子市场)</div>
+                        <div class="text-right text-xs font-mono">500 ฿ <span class="text-slate-400 ml-1">¥111.8</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-shopping" style="width: 7.6%"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2月18日 -->
+        <div class="day-card">
+            <div class="bg-orange-500 p-4 text-white flex justify-between items-end">
+                <div>
+                    <p class="text-orange-100 text-xs uppercase tracking-wider">Feb 18</p>
+                    <h2 class="font-bold text-lg">网球与精致泰菜</h2>
+                </div>
+                <div class="text-right">
+                    <span class="font-mono font-bold text-xl block">3,604 ฿</span>
+                    <span class="text-xs text-orange-100 opacity-80">约 ¥806.2</span>
+                </div>
+            </div>
+            <div class="py-2 text-sm">
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label"><span>🍜</span> 午餐 @ Kiew Kai Ka</div>
+                        <div class="font-mono text-xs">1,394 ฿ <span class="text-slate-400 ml-1">¥311.8</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-food" style="width: 38.6%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label"><span>💰</span> 网球课费用</div>
+                        <div class="font-mono text-xs">900 ฿ <span class="text-slate-400 ml-1">¥201.3</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-default" style="width: 24.9%"></div></div>
+                </div>
+                <div class="item-container">
+                    <div class="item-header">
+                        <div class="item-label"><span>🚕</span> 当日 7 次打车</div>
+                        <div class="font-mono text-xs">399 ฿ <span class="text-slate-400 ml-1">¥89.3</span></div>
+                    </div>
+                    <div class="progress-bg"><div class="progress-fill fill-transport" style="width: 11.0%"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-slate-400 text-xs py-8">
+            数据已根据关键词自动分类并匹配图标。
+        </footer>
+    </div>
+</body>
+</html>
