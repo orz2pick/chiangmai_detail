@@ -16,13 +16,18 @@
         .progress-fill { height: 100%; border-radius: 99px; transition: width 0.6s ease; }
         .amount-thb { font-size: 0.65rem; font-weight: 800; line-height: 1.1; margin-top: 2px; }
         .amount-cny { font-size: 0.55rem; font-weight: 500; opacity: 0.9; line-height: 1.1; }
+        .chart-container { position: relative; width: 200px; height: 200px; margin: 0 auto; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 0.4s ease-out forwards; }
     </style>
 </head>
-<body class="p-4 md:p-8 bg-slate-50 min-h-screen">
-    <div class="max-w-xl mx-auto">
+<body class="p-4 md:p-8 bg-slate-50 min-h-screen" onclick="resetToMonthly(event)">
+    <div class="max-w-xl mx-auto" onclick="event.stopPropagation()">
         <header class="text-center mb-6">
             <h1 class="text-2xl font-bold text-slate-800">清迈消费双币热力图</h1>
-            <p class="text-slate-500 text-sm mt-1">方格显示：泰铢 (上) / 人民币 (下)</p>
+            <div id="header-total" class="mt-2 inline-block px-4 py-1.5 bg-slate-200/50 rounded-full text-sm font-medium text-slate-600">
+                <!-- JS 计算月总额 -->
+            </div>
         </header>
 
         <!-- 日历部分 -->
@@ -42,13 +47,13 @@
             </div>
         </div>
 
-        <!-- 明细部分 -->
-        <div id="detail-panel" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <!-- 汇总/详情区域 -->
+        <div id="info-panel" class="animate-fade">
             <div id="detail-header-bg" class="rounded-t-2xl p-5 text-white shadow-lg transition-colors duration-500">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h2 id="detail-date" class="text-2xl font-bold">2月12日</h2>
-                        <p id="detail-title" class="text-white/80 text-sm mt-1"></p>
+                        <h2 id="detail-date" class="text-2xl font-bold">2月汇总</h2>
+                        <p id="detail-title" class="text-white/80 text-sm mt-1">全月行程概览</p>
                     </div>
                     <div class="text-right">
                         <div id="detail-total-thb" class="text-2xl font-mono font-bold">0 ฿</div>
@@ -56,14 +61,21 @@
                     </div>
                 </div>
             </div>
-            <div id="detail-items" class="bg-white rounded-b-2xl p-2 shadow-sm border border-slate-200 border-t-0 min-h-[200px]">
-                <!-- JS 填充行 -->
+            
+            <div class="bg-white rounded-b-2xl shadow-sm border border-slate-200 border-t-0 overflow-hidden">
+                <!-- 统计图区 -->
+                <div class="p-6 bg-slate-50/50 border-b border-slate-100 flex flex-col items-center">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">消费构成比例 (>15%显示标注)</h3>
+                    <div id="pie-chart-box" class="flex flex-col items-center gap-4 w-full">
+                        <div id="pie-canvas" class="chart-container"></div>
+                        <div id="pie-legend" class="grid grid-cols-3 gap-x-4 gap-y-1 text-[10px] w-full max-w-sm px-4"></div>
+                    </div>
+                </div>
+                
+                <div id="detail-items" class="min-h-[100px]">
+                    <!-- JS 填充行 -->
+                </div>
             </div>
-        </div>
-
-        <div id="empty-state" class="text-center py-20 text-slate-400">
-            <div class="text-4xl mb-3 opacity-20">📈</div>
-            <p>点击日历查看当日详细清单</p>
         </div>
     </div>
 
@@ -81,6 +93,7 @@
             "药品": { icon: "💊", color: "#94a3b8" },
             "运动": { icon: "🎾", color: "#818cf8" },
             "门票": { icon: "🎫", color: "#c084fc" },
+            "住宿": { icon: "🏨", color: "#2dd4bf" },
             "其他": { icon: "📦", color: "#cbd5e1" }
         };
 
@@ -97,7 +110,6 @@
             { date: 21, title: "返程网球课", items: [["早晨6点网球课", 700, "THB", "运动"]] }
         ];
 
-        // 预计算总额
         const processedData = rawData.map(day => {
             const totalTHB = day.items.reduce((sum, item) => {
                 const [_, val, unit] = item;
@@ -106,63 +118,113 @@
             return { ...day, totalTHB };
         });
 
-        // 更加分明的热力图色阶 (蓝 -> 红)
+        const monthTotalTHB = processedData.reduce((s, d) => s + d.totalTHB, 0);
+
         function getHeatColor(total) {
             if (total === 0) return '#f8fafc';
-            if (total < 1000) return '#dbeafe'; // 浅蓝
-            if (total < 2500) return '#93c5fd'; // 中蓝
-            if (total < 5000) return '#fca5a5'; // 浅红
-            if (total < 8000) return '#ef4444'; // 鲜红
-            return '#b91c1c'; // 深红
-        }
-
-        // 确保文字在深浅色背景下都可读
-        function getTextColor(total) {
-            if (total > 5000) return '#ffffff'; // 深色背景用白字
-            if (total > 0) return '#1e3a8a';    // 浅蓝背景用深蓝字
-            return '#cbd5e1';
+            if (total < 1000) return '#dbeafe';
+            if (total < 2500) return '#93c5fd';
+            if (total < 5000) return '#fca5a5';
+            if (total < 8000) return '#ef4444';
+            return '#b91c1c';
         }
 
         const calendarContainer = document.getElementById('calendar-days');
-        const detailPanel = document.getElementById('detail-panel');
-        const emptyState = document.getElementById('empty-state');
+        const headerTotal = document.getElementById('header-total');
 
         function renderCalendar() {
+            headerTotal.innerHTML = `2月共计：<span class="text-slate-900 font-bold">${Math.round(monthTotalTHB).toLocaleString()} ฿</span> / <span class="text-slate-900 font-bold">¥${Math.round(monthTotalTHB * exchangeRate).toLocaleString()}</span>`;
+            
             const firstDayOffset = 6;
             const daysInMonth = 28;
+            for (let i = 0; i < firstDayOffset; i++) calendarContainer.appendChild(document.createElement('div'));
 
-            // 填充前面的空白格子
-            for (let i = 0; i < firstDayOffset; i++) {
-                const emptyCell = document.createElement('div');
-                calendarContainer.appendChild(emptyCell);
-            }
-
-            // 填充日期格子
             for (let d = 1; d <= daysInMonth; d++) {
                 const cell = document.createElement('div');
                 cell.className = 'day-cell bg-slate-100 text-slate-300';
-                
                 const dayData = processedData.find(x => x.date === d);
                 if (dayData) {
-                    const bgColor = getHeatColor(dayData.totalTHB);
-                    const textColor = getTextColor(dayData.totalTHB);
-                    const totalCNY = Math.round(dayData.totalTHB * exchangeRate);
-
-                    cell.style.backgroundColor = bgColor;
+                    const textColor = dayData.totalTHB > 5000 ? '#ffffff' : (dayData.totalTHB > 0 ? '#1e3a8a' : '#cbd5e1');
+                    cell.style.backgroundColor = getHeatColor(dayData.totalTHB);
                     cell.style.color = textColor;
                     cell.className = 'day-cell font-bold shadow-sm';
                     cell.innerHTML = `
                         <span class="text-[9px] opacity-60 absolute top-1 left-1.5">${d}</span>
                         <span class="amount-thb">฿${Math.round(dayData.totalTHB)}</span>
-                        <span class="amount-cny">¥${totalCNY}</span>
+                        <span class="amount-cny">¥${Math.round(dayData.totalTHB * exchangeRate)}</span>
                     `;
-                    cell.onclick = (e) => showDetail(d, e.currentTarget);
+                    cell.onclick = (e) => { e.stopPropagation(); showDetail(d, e.currentTarget); };
                 } else {
                     cell.innerHTML = `<span class="text-[9px] absolute top-1 left-1.5 opacity-40">${d}</span>`;
                 }
-
                 calendarContainer.appendChild(cell);
             }
+        }
+
+        function drawPieChart(dataMap) {
+            const canvas = document.getElementById('pie-canvas');
+            const legend = document.getElementById('pie-legend');
+            canvas.innerHTML = "";
+            legend.innerHTML = "";
+
+            const total = Object.values(dataMap).reduce((a, b) => a + b, 0);
+            if (total === 0) return;
+
+            const size = 200;
+            const radius = 80;
+            const center = size / 2;
+            let cumulativePercent = 0;
+
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+            svg.setAttribute("class", "w-full h-full");
+            
+            Object.entries(dataMap).forEach(([cat, val]) => {
+                const percent = val / total;
+                const startX = center + radius * Math.cos(2 * Math.PI * cumulativePercent - Math.PI/2);
+                const startY = center + radius * Math.sin(2 * Math.PI * cumulativePercent - Math.PI/2);
+                
+                // 计算标注位置 (扇形中间)
+                const labelAngle = 2 * Math.PI * (cumulativePercent + percent / 2) - Math.PI/2;
+                const labelX = center + (radius * 0.65) * Math.cos(labelAngle);
+                const labelY = center + (radius * 0.65) * Math.sin(labelAngle);
+
+                cumulativePercent += percent;
+                
+                const endX = center + radius * Math.cos(2 * Math.PI * cumulativePercent - Math.PI/2);
+                const endY = center + radius * Math.sin(2 * Math.PI * cumulativePercent - Math.PI/2);
+                const largeArcFlag = percent > 0.5 ? 1 : 0;
+
+                const pathData = `M ${center} ${center} L ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY} Z`;
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", pathData);
+                path.setAttribute("fill", categories[cat]?.color || "#ccc");
+                path.setAttribute("stroke", "#fff");
+                path.setAttribute("stroke-width", "1.5");
+                svg.appendChild(path);
+
+                // 只有大于 15% 才显示文字标注
+                if (percent > 0.15) {
+                    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    text.setAttribute("x", labelX);
+                    text.setAttribute("y", labelY);
+                    text.setAttribute("fill", "#000");
+                    text.setAttribute("font-size", "10px");
+                    text.setAttribute("font-weight", "bold");
+                    text.setAttribute("text-anchor", "middle");
+                    text.setAttribute("dominant-baseline", "middle");
+                    text.textContent = cat;
+                    svg.appendChild(text);
+                }
+
+                legend.innerHTML += `
+                    <div class="flex items-center gap-1 mb-1">
+                        <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${categories[cat]?.color}"></span>
+                        <span class="truncate">${cat}: ${Math.round(percent * 100)}%</span>
+                    </div>
+                `;
+            });
+            canvas.appendChild(svg);
         }
 
         function showDetail(dateNum, element) {
@@ -170,55 +232,68 @@
             if (!day) return;
 
             document.querySelectorAll('.day-cell').forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
-
-            emptyState.classList.add('hidden');
-            detailPanel.classList.remove('hidden');
+            if(element) element.classList.add('active');
 
             const headerBg = document.getElementById('detail-header-bg');
             headerBg.style.backgroundColor = getHeatColor(day.totalTHB);
-            
-            // 响应文字颜色
-            const isDark = day.totalTHB > 5000;
-            headerBg.style.color = isDark ? '#ffffff' : '#1e3a8a';
+            headerBg.style.color = day.totalTHB > 5000 ? '#ffffff' : '#1e3a8a';
 
             document.getElementById('detail-date').innerText = `2月${dateNum}日`;
             document.getElementById('detail-title').innerText = day.title;
             document.getElementById('detail-total-thb').innerText = `${Math.round(day.totalTHB).toLocaleString()} ฿`;
-            document.getElementById('detail-total-cny').innerText = `约 ¥${(day.totalTHB * exchangeRate).toFixed(1)}`;
+            document.getElementById('detail-total-cny').innerText = `约 ¥${Math.round(day.totalTHB * exchangeRate)}`;
 
             const itemsContainer = document.getElementById('detail-items');
+            const catStats = {};
+
             itemsContainer.innerHTML = day.items.map(item => {
                 const [name, val, unit, cat] = item;
                 const thbVal = unit === "THB" ? val : val / exchangeRate;
                 const cnyVal = unit === "CNY" ? val : val * exchangeRate;
                 const pct = ((thbVal / day.totalTHB) * 100).toFixed(1);
-                const catInfo = categories[cat] || { icon: "💰", color: "#94a3b8" };
+                catStats[cat] = (catStats[cat] || 0) + thbVal;
 
                 return `
                     <div class="px-4 py-3 border-b border-slate-50 last:border-0">
                         <div class="flex justify-between items-start mb-1">
                             <div class="flex gap-3">
-                                <span class="text-xl shrink-0">${catInfo.icon}</span>
-                                <div>
-                                    <p class="text-sm font-bold text-slate-700 leading-tight">${name}</p>
-                                    <p class="text-[10px] text-slate-400 font-medium">${cat} · 占比 ${pct}%</p>
-                                </div>
+                                <span class="text-xl shrink-0">${categories[cat]?.icon || '💰'}</span>
+                                <div><p class="text-sm font-bold text-slate-700">${name}</p><p class="text-[10px] text-slate-400">${cat} · ${pct}%</p></div>
                             </div>
-                            <div class="text-right">
-                                <p class="text-sm font-bold text-slate-800 leading-tight">฿${Math.round(thbVal).toLocaleString()}</p>
-                                <p class="text-[10px] text-slate-400">¥${cnyVal.toFixed(1)}</p>
-                            </div>
+                            <div class="text-right"><p class="text-sm font-bold text-slate-800">฿${Math.round(thbVal)}</p><p class="text-[10px] text-slate-400">¥${cnyVal.toFixed(1)}</p></div>
                         </div>
-                        <div class="progress-bg">
-                            <div class="progress-fill shadow-sm" style="width: ${pct}%; background-color: ${catInfo.color}"></div>
-                        </div>
+                        <div class="progress-bg"><div class="progress-fill shadow-sm" style="width: ${pct}%; background-color: ${categories[cat]?.color}"></div></div>
                     </div>
                 `;
             }).join('');
+            drawPieChart(catStats);
         }
 
-        window.onload = renderCalendar;
+        function resetToMonthly(e) {
+            document.querySelectorAll('.day-cell').forEach(c => c.classList.remove('active'));
+            const headerBg = document.getElementById('detail-header-bg');
+            headerBg.style.backgroundColor = "#475569";
+            headerBg.style.color = "#ffffff";
+
+            document.getElementById('detail-date').innerText = `2月汇总`;
+            document.getElementById('detail-title').innerText = "全月行程消费分布";
+            document.getElementById('detail-total-thb').innerText = `${Math.round(monthTotalTHB).toLocaleString()} ฿`;
+            document.getElementById('detail-total-cny').innerText = `约 ¥${Math.round(monthTotalTHB * exchangeRate).toLocaleString()}`;
+
+            const catStats = {};
+            processedData.forEach(d => d.items.forEach(it => {
+                const [_, val, unit, cat] = it;
+                catStats[cat] = (catStats[cat] || 0) + (unit === "THB" ? val : val / exchangeRate);
+            }));
+
+            drawPieChart(catStats);
+            document.getElementById('detail-items').innerHTML = `<div class="p-8 text-center text-slate-400 text-sm italic">点击日历查看单日明细，点击外部回到汇总</div>`;
+        }
+
+        window.onload = () => {
+            renderCalendar();
+            resetToMonthly();
+        };
     </script>
 </body>
 </html>
