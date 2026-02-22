@@ -1,40 +1,247 @@
 const rawData = [
-            { date: 11, title: "初入清迈", items: [["电话卡", 399, "THB", "通信"], ["打车 Taxi", 180, "THB", "交通"]] },
-            { date: 12, title: "初到清迈", items: [["机场接机/打车", 466, "THB", "交通"], ["Pizza My Heart", 830, "THB", "餐饮"], ["Poopoopaper", 120, "THB", "购物"], ["Soap for Soul", 670, "THB", "购物"], ["Beak Design", 952, "THB", "购物"], ["7-Eleven汇总", 138, "THB", "零食"], ["泰式按摩", 600, "THB", "娱乐"], ["breakfast", 199, "THB", "餐饮"], ["去程机票钱", 2679 + 2770, "CNY", "交通"]] },
-            { date: 13, title: "兰纳拍照日", items: [["早晨6点网球课", 700, "THB", "运动"], ["早饭", 259, "THB", "餐饮"], ["打车去Lanna", 89, "THB", "交通"], ["椰子水3瓶", 75, "THB", "饮料"], ["拍照服务费", 500, "CNY", "娱乐"], ["Lanna门票", 300, "THB", "门票"], ["打车去Kaosoy", 104, "THB", "交通"], ["泰茶", 75, "THB", "饮料"], ["晚饭", 540, "THB", "餐饮"], ["711护发油等", 66.19, "CNY", "日用"], ["打车汇总", 222, "THB", "交通"], ["711水+薯片", 10.26, "CNY", "零食"], ["玉米", 10, "THB", "零食"]] },
-            { date: 14, title: "竹子市场购物日", items: [["早晨6点网球课", 700, "THB", "运动"], ["打车去球场", 81, "THB", "交通"], ["打车去市场", 116, "THB", "交通"], ["荷叶包", 20, "THB", "餐饮"], ["猪肉粥", 50, "THB", "餐饮"], ["沙拉", 55, "THB", "餐饮"], ["果汁", 50, "THB", "饮料"], ["小柿子", 50, "THB", "水果"], ["有机牛奶", 45, "THB", "饮料"], ["面包", 236, "THB", "餐饮"], ["布丁+酸奶", 80, "THB", "零食"], ["裙子", 500, "THB", "购物"], ["笔记本", 280, "THB", "购物"], ["咖啡", 170, "THB", "饮料"], ["巧克力面包*2", 96, "THB", "零食"], ["双条车", 140, "THB", "交通"], ["奈飞会员", 12.7, "CNY", "娱乐"], ["摩的", 90, "THB", "交通"], ["吃饭", 57.69, "CNY", "餐饮"], ["买衣服(支付宝)", 316, "CNY", "购物"], ["面膜", 41, "CNY", "日用"], ["买衣服(现金)", 780, "THB", "购物"], ["超市购物", 211.56, "CNY", "购物"], ["榴莲", 87.65, "CNY", "水果"], ["突突车", 250, "THB", "交通"], ["水2瓶", 22, "THB", "饮料"], ["驱蚊与溃疡药", 51.43, "CNY", "药品"]] },
-            { date: 15, title: "泰餐课预定与榴莲", items: [["水两瓶", 22, "THB", "饮料"], ["打车去塔佩门", 108, "THB", "交通"], ["打车回酒店", 83.22, "THB", "交通"], ["眼镜布", 8.5, "THB", "日用"], ["日料晚餐", 571, "THB", "餐饮"], ["榴莲", 340, "THB", "水果"], ["草莓冰淇淋", 99, "THB", "零食"], ["预定泰餐课程", 368.6, "CNY", "娱乐"]] },
-            { date: 16, title: "MAYA 补给与红酒", items: [["咖啡", 90, "THB", "饮料"], ["马杀鸡", 650, "THB", "娱乐"], ["泰tea", 45, "THB", "饮料"], ["红酒", 180, "THB", "饮料"], ["MAYA超市", 185.6, "CNY", "购物"], ["薯条", 10.4, "CNY", "零食"], ["药品", 55.33, "CNY", "药品"], ["Grab打车", 62, "THB", "交通"], ["两瓶水", 4.72, "CNY", "饮料"]] },
-            { date: 17, title: "全天运动与燕窝", items: [["早晨6点网球课", 700, "THB", "运动"], ["烤猪肉片", 5, "THB", "餐饮"], ["三明治", 25, "THB", "餐饮"], ["豆浆", 7, "THB", "饮料"], ["椰子水2瓶", 39, "THB", "饮料"], ["打车到餐厅", 56, "THB", "交通"], ["吃饭", 750, "THB", "餐饮"], ["冰激凌", 250, "THB", "零食"], ["打车回来", 10.95, "CNY", "交通"], ["打车去网球场", 84, "THB", "交通"], ["网球课", 1100, "THB", "运动"], ["1瓶水", 10, "THB", "饮料"], ["打车吃燕窝", 43, "THB", "交通"], ["燕窝", 80, "THB", "餐饮"], ["打车回酒店", 39, "THB", "交通"], ["两瓶水", 22, "THB", "饮料"]] },
-            { date: 18, title: "网球课与精致餐饮", items: [["早晨6点网球课", 700, "THB", "运动"], ["打车去球场", 98, "THB", "交通"], ["打车去Nana Bakery", 70, "THB", "交通"], ["早餐", 744, "THB", "餐饮"], ["打车去餐馆", 77, "THB", "交通"], ["午饭Kiew Kai Ka", 1394, "THB", "餐饮"], ["木头刮板", 55, "THB", "购物"], ["打车回Cafe", 31, "THB", "交通"], ["打车去网球", 41, "THB", "交通"], ["网球课", 900, "THB", "运动"], ["1瓶水", 10, "THB", "饮料"], ["打车吃燕窝", 43, "THB", "交通"], ["燕窝", 80, "THB", "餐饮"], ["打车回Cafe", 39, "THB", "交通"], ["两瓶水", 22, "THB", "饮料"]] },
-            { date: 19, title: "瀑布、象与按摩", items: [["粘粘瀑布一日游", 270.48, "CNY", "娱乐"], ["手机袋+柚子", 120, "THB", "购物"], ["柚子+虾片", 125, "THB", "零食"], ["豪华按摩", 4343.13, "THB", "娱乐"], ["买衣服", 990, "THB", "购物"], ["买袜子", 200, "THB", "购物"], ["打车去披萨店", 102, "THB", "交通"], ["披萨", 990, "THB", "餐饮"], ["打车去网球场", 58, "THB", "交通"], ["网球场租用", 1110, "THB", "运动"], ["打车回酒店", 204, "THB", "交通"], ["西瓜等水果", 100, "THB", "水果"]] },
-            { date: 20, title: "网球与日常", items: [["早晨6点网球课", 700, "THB", "运动"], ["打车去网球场", 56, "THB", "交通"], ["打车去咖啡", 66, "THB", "交通"], ["咖啡", 100, "THB", "饮料"], ["面包", 165, "THB", "餐饮"], ["牙膏和剃须刀", 61, "THB", "日用"]] },
-            { date: 21, title: "运动、咖啡与购物", items: [
-                ["打车去网球场", 77, "THB", "交通"],
-                ["早晨网球课", 700, "THB", "运动"],
-                ["打车回来", 73, "THB", "交通"],
-                ["早饭鸡蛋和面包", 0, "THB", "餐饮"],
-                ["打车来到konjohn咖啡店", 124, "THB", "交通"],
-                ["咖啡2杯", 110, "THB", "饮料"],
-                ["打碎杯子", 50, "THB", "其他"],
-                ["Caramel macchiato", 65, "THB", "饮料"],
-                ["马杀鸡", 1990, "THB", "娱乐"],
-                ["睡眠喷雾", 250, "THB", "日用"],
-                ["俩雪糕", 60, "THB", "零食"],
-                ["碗", 200, "THB", "购物"],
-                ["打车去mac cafe", 56, "THB", "交通"],
-                ["Bear一瓶", 69, "THB", "饮料"],
-                ["柚子*4+西瓜*1", 100, "THB", "水果"],
-                ["晚饭", 701, "THB", "餐饮"],
-                ["方便面薯片", 36, "THB", "零食"],
-                ["布丁", 20, "THB", "零食"]
-            ]},
-            { date: 22, title: "归程结算", items: [
-                ["回程机票", 5386, "CNY", "交通"], 
-                ["住宿结算(21-22)", 1974.86, "CNY", "住宿"],
-                ["打车去机场", 253, "THB", "交通"],
-                ["两杯澳白", 240, "THB", "饮料"],
-                ["小说《The Crimsons》", 265, "THB", "购物"],
-                ["Coconut Milk & Tomyum", 120, "THB", "其他"]
-            ] }
-        ];
+    { date: 11, title: "初入清迈", items: [["去程机票钱(1)", 2679, "CNY", "交通"], ["电话卡", 399, "THB", "通信"], ["打车 Taxi", 180, "THB", "交通"]] },
+    { date: 12, title: "初到清迈", items: [["去程机票钱(2)", 2770, "CNY", "交通"], ["机场接机/打车", 466, "THB", "交通"], ["Pizza My Heart", 830, "THB", "餐饮"], ["Poopoopaper", 120, "THB", "购物"], ["Soap for Soul", 670, "THB", "购物"], ["Beak Design", 952, "THB", "购物"], ["7-Eleven汇总", 138, "THB", "零食"], ["泰式按摩", 600, "THB", "娱乐"], ["breakfast", 199, "THB", "餐饮"]] },
+    { date: 13, title: "兰纳拍照日", items: [["早晨6点网球课", 700, "THB", "运动"], ["早饭", 259, "THB", "餐饮"], ["打车去Lanna", 89, "THB", "交通"], ["椰子水3瓶", 75, "THB", "饮料"], ["拍照服务费", 500, "CNY", "娱乐"], ["Lanna门票", 300, "THB", "门票"], ["打车去Kaosoy", 104, "THB", "交通"], ["泰茶", 75, "THB", "饮料"], ["晚饭", 540, "THB", "餐饮"], ["711护发油等", 66.19, "CNY", "日用"], ["打车汇总", 222, "THB", "交通"], ["711水+薯片", 10.26, "CNY", "零食"], ["玉米", 10, "THB", "零食"]] },
+    { date: 14, title: "竹子市场购物日", items: [["早晨6点网球课", 700, "THB", "运动"], ["打车去球场", 81, "THB", "交通"], ["打车去市场", 116, "THB", "交通"], ["荷叶包", 20, "THB", "餐饮"], ["猪肉粥", 50, "THB", "餐饮"], ["沙拉", 55, "THB", "餐饮"], ["果汁", 50, "THB", "饮料"], ["小柿子", 50, "THB", "水果"], ["有机牛奶", 45, "THB", "饮料"], ["面包", 236, "THB", "餐饮"], ["布丁+酸奶", 80, "THB", "零食"], ["裙子", 500, "THB", "购物"], ["笔记本", 280, "THB", "购物"], ["咖啡", 170, "THB", "饮料"], ["巧克力面包*2", 96, "THB", "零食"], ["双条车", 140, "THB", "交通"], ["奈飞会员", 12.7, "CNY", "娱乐"], ["摩的", 90, "THB", "交通"], ["吃饭", 57.69, "CNY", "餐饮"], ["买衣服(支付宝)", 316, "CNY", "购物"], ["面膜", 41, "CNY", "日用"], ["买衣服(现金)", 780, "THB", "购物"], ["超市购物", 211.56, "CNY", "购物"], ["榴莲", 87.65, "CNY", "水果"], ["突突车", 250, "THB", "交通"], ["水2瓶", 22, "THB", "饮料"], ["驱蚊与溃疡药", 51.43, "CNY", "药品"]] },
+    { date: 15, title: "泰餐课预定与榴莲", items: [["水两瓶", 22, "THB", "饮料"], ["打车去塔佩门", 108, "THB", "交通"], ["打车回酒店", 83.22, "THB", "交通"], ["眼镜布", 8.5, "THB", "日用"], ["日料晚餐", 571, "THB", "餐饮"], ["榴莲", 340, "THB", "水果"], ["草莓冰淇淋", 99, "THB", "零食"], ["预定泰餐课程", 368.6, "CNY", "娱乐"]] },
+    { date: 16, title: "MAYA 补给与红酒", items: [["咖啡", 90, "THB", "饮料"], ["马杀鸡", 650, "THB", "娱乐"], ["泰tea", 45, "THB", "饮料"], ["红酒", 180, "THB", "饮料"], ["MAYA超市", 185.6, "CNY", "购物"], ["薯条", 10.4, "CNY", "零食"], ["药品", 55.33, "CNY", "药品"], ["Grab打车", 62, "THB", "交通"], ["两瓶水", 4.72, "CNY", "饮料"]] },
+    { date: 17, title: "全天运动与燕窝", items: [["早晨6点网球课", 700, "THB", "运动"], ["烤猪肉片", 5, "THB", "餐饮"], ["三明治", 25, "THB", "餐饮"], ["豆浆", 7, "THB", "饮料"], ["椰子水2瓶", 39, "THB", "饮料"], ["打车到餐厅", 56, "THB", "交通"], ["吃饭", 750, "THB", "餐饮"], ["冰激凌", 250, "THB", "零食"], ["打车回来", 10.95, "CNY", "交通"], ["打车去网球场", 84, "THB", "交通"], ["网球课", 1100, "THB", "运动"], ["1瓶水", 10, "THB", "饮料"], ["打车吃燕窝", 43, "THB", "交通"], ["燕窝", 80, "THB", "餐饮"], ["打车回酒店", 39, "THB", "交通"], ["两瓶水", 22, "THB", "饮料"]] },
+    { date: 18, title: "网球课与精致餐饮", items: [["早晨6点网球课", 700, "THB", "运动"], ["打车去球场", 98, "THB", "交通"], ["打车去Nana Bakery", 70, "THB", "交通"], ["早餐", 744, "THB", "餐饮"], ["打车去餐馆", 77, "THB", "交通"], ["午饭Kiew Kai Ka", 1394, "THB", "餐饮"], ["木头刮板", 55, "THB", "购物"], ["打车回Cafe", 31, "THB", "交通"], ["打车去网球", 41, "THB", "交通"], ["网球课", 900, "THB", "运动"], ["1瓶水", 10, "THB", "饮料"], ["打车吃燕窝", 43, "THB", "交通"], ["燕窝", 80, "THB", "餐饮"], ["打车回Cafe", 39, "THB", "交通"], ["两瓶水", 22, "THB", "饮料"]] },
+    { date: 19, title: "瀑布、象与按摩", items: [["粘粘瀑布一日游", 270.48, "CNY", "娱乐"], ["手机袋+柚子", 120, "THB", "购物"], ["柚子+虾片", 125, "THB", "零食"], ["豪华按摩", 4343.13, "THB", "娱乐"], ["买衣服", 990, "THB", "购物"], ["买袜子", 200, "THB", "购物"], ["打车去披萨店", 102, "THB", "交通"], ["披萨", 990, "THB", "餐饮"], ["打车去网球场", 58, "THB", "交通"], ["网球场租用", 1110, "THB", "运动"], ["打车回酒店", 204, "THB", "交通"], ["西瓜等水果", 100, "THB", "水果"]] },
+    { date: 20, title: "网球、拍照与宁曼路", items: [["打车去网球场", 56, "THB", "交通"], ["早晨网球", 700, "THB", "运动"], ["打车去喝咖啡", 66, "THB", "交通"], ["咖啡", 100, "THB", "饮料"], ["面包", 165, "THB", "餐饮"], ["711买牙膏和剃须刀", 61, "THB", "日用"], ["买花", 150, "THB", "其他"], ["买椰子水3瓶", 75, "THB", "饮料"], ["酸奶碗", 119, "THB", "零食"], ["打车去宁曼一号", 132, "THB", "交通"], ["拍照", 950, "CNY", "娱乐"], ["打车去网球场", 66, "THB", "交通"], ["回来到epilogue cafe", 94, "THB", "交通"], ["网球", 900, "THB", "运动"], ["牛肉面", 60, "THB", "餐饮"], ["鸡肉面", 50, "THB", "餐饮"], ["香蕉饼", 35, "THB", "零食"], ["柚子西瓜", 80, "THB", "水果"], ["泡面", 20, "THB", "零食"], ["水", 22, "THB", "饮料"], ["方便面", 30, "THB", "零食"], ["小衣服", 99, "THB", "购物"]] },
+    { date: 21, title: "运动、咖啡与购物", items: [["打车去网球场", 77, "THB", "交通"], ["早晨网球课", 700, "THB", "运动"], ["打车回来", 73, "THB", "交通"], ["早饭鸡蛋和面包", 0, "THB", "餐饮"], ["打车来到konjohn咖啡店", 124, "THB", "交通"], ["咖啡2杯", 110, "THB", "饮料"], ["打碎杯子", 50, "THB", "其他"], ["Caramel macchiato", 65, "THB", "饮料"], ["马杀鸡", 1990, "THB", "娱乐"], ["睡眠喷雾", 250, "THB", "日用"], ["俩雪糕", 60, "THB", "零食"], ["碗", 200, "THB", "购物"], ["打车去mac cafe", 56, "THB", "交通"], ["Bear一瓶", 69, "THB", "饮料"], ["柚子*4+西瓜*1", 100, "THB", "水果"], ["晚饭", 701, "THB", "餐饮"], ["方便面薯片", 36, "THB", "零食"], ["布丁", 20, "THB", "零食"]] },
+    { date: 22, title: "归程结算", items: [["回程机票", 5386, "CNY", "交通"], ["住宿结算(21-22)", 1974.86, "CNY", "住宿"], ["打车去机场", 253, "THB", "交通"], ["两杯澳白", 240, "THB", "饮料"], ["小说《The Crimsons》", 265, "THB", "购物"], ["Coconut Milk & Tomyum", 120, "THB", "其他"]] }
+];
+json
+[
+  {
+    "date": 11,
+    "title": "初入清迈",
+    "items": [
+      { "name": "去程机票钱(1)", "amount": 2679, "currency": "CNY", "category": "交通" },
+      { "name": "电话卡", "amount": 399, "currency": "THB", "category": "通信" },
+      { "name": "打车 Taxi", "amount": 180, "currency": "THB", "category": "交通" }
+    ]
+  },
+  {
+    "date": 12,
+    "title": "初到清迈",
+    "items": [
+      { "name": "去程机票钱(2)", "amount": 2770, "currency": "CNY", "category": "交通" },
+      { "name": "机场接机/打车", "amount": 466, "currency": "THB", "category": "交通" },
+      { "name": "Pizza My Heart", "amount": 830, "currency": "THB", "category": "餐饮" },
+      { "name": "Poopoopaper", "amount": 120, "currency": "THB", "category": "购物" },
+      { "name": "Soap for Soul", "amount": 670, "currency": "THB", "category": "购物" },
+      { "name": "Beak Design", "amount": 952, "currency": "THB", "category": "购物" },
+      { "name": "7-Eleven汇总", "amount": 138, "currency": "THB", "category": "零食" },
+      { "name": "泰式按摩", "amount": 600, "currency": "THB", "category": "娱乐" },
+      { "name": "breakfast", "amount": 199, "currency": "THB", "category": "餐饮" }
+    ]
+  },
+  {
+    "date": 13,
+    "title": "兰纳拍照日",
+    "items": [
+      { "name": "早晨6点网球课", "amount": 700, "currency": "THB", "category": "运动" },
+      { "name": "早饭", "amount": 259, "currency": "THB", "category": "餐饮" },
+      { "name": "打车去Lanna", "amount": 89, "currency": "THB", "category": "交通" },
+      { "name": "椰子水3瓶", "amount": 75, "currency": "THB", "category": "饮料" },
+      { "name": "拍照服务费", "amount": 500, "currency": "CNY", "category": "娱乐" },
+      { "name": "Lanna门票", "amount": 300, "currency": "THB", "category": "门票" },
+      { "name": "打车去Kaosoy", "amount": 104, "currency": "THB", "category": "交通" },
+      { "name": "泰茶", "amount": 75, "currency": "THB", "category": "饮料" },
+      { "name": "晚饭", "amount": 540, "currency": "THB", "category": "餐饮" },
+      { "name": "711护发油等", "amount": 66.19, "currency": "CNY", "category": "日用" },
+      { "name": "打车汇总", "amount": 222, "currency": "THB", "category": "交通" },
+      { "name": "711水+薯片", "amount": 10.26, "currency": "CNY", "category": "零食" },
+      { "name": "玉米", "amount": 10, "currency": "THB", "category": "零食" }
+    ]
+  },
+  {
+    "date": 14,
+    "title": "竹子市场购物日",
+    "items": [
+      { "name": "早晨6点网球课", "amount": 700, "currency": "THB", "category": "运动" },
+      { "name": "打车去球场", "amount": 81, "currency": "THB", "category": "交通" },
+      { "name": "打车去市场", "amount": 116, "currency": "THB", "category": "交通" },
+      { "name": "荷叶包", "amount": 20, "currency": "THB", "category": "餐饮" },
+      { "name": "猪肉粥", "amount": 50, "currency": "THB", "category": "餐饮" },
+      { "name": "沙拉", "amount": 55, "currency": "THB", "category": "餐饮" },
+      { "name": "果汁", "amount": 50, "currency": "THB", "category": "饮料" },
+      { "name": "小柿子", "amount": 50, "currency": "THB", "category": "水果" },
+      { "name": "有机牛奶", "amount": 45, "currency": "THB", "category": "饮料" },
+      { "name": "面包", "amount": 236, "currency": "THB", "category": "餐饮" },
+      { "name": "布丁+酸奶", "amount": 80, "currency": "THB", "category": "零食" },
+      { "name": "裙子", "amount": 500, "currency": "THB", "category": "购物" },
+      { "name": "笔记本", "amount": 280, "currency": "THB", "category": "购物" },
+      { "name": "咖啡", "amount": 170, "currency": "THB", "category": "饮料" },
+      { "name": "巧克力面包*2", "amount": 96, "currency": "THB", "category": "零食" },
+      { "name": "双条车", "amount": 140, "currency": "THB", "category": "交通" },
+      { "name": "奈飞会员", "amount": 12.7, "currency": "CNY", "category": "娱乐" },
+      { "name": "摩的", "amount": 90, "currency": "THB", "category": "交通" },
+      { "name": "吃饭", "amount": 57.69, "currency": "CNY", "category": "餐饮" },
+      { "name": "买衣服(支付宝)", "amount": 316, "currency": "CNY", "category": "购物" },
+      { "name": "面膜", "amount": 41, "currency": "CNY", "category": "日用" },
+      { "name": "买衣服(现金)", "amount": 780, "currency": "THB", "category": "购物" },
+      { "name": "超市购物", "amount": 211.56, "currency": "CNY", "category": "购物" },
+      { "name": "榴莲", "amount": 87.65, "currency": "CNY", "category": "水果" },
+      { "name": "突突车", "amount": 250, "currency": "THB", "category": "交通" },
+      { "name": "水2瓶", "amount": 22, "currency": "THB", "category": "饮料" },
+      { "name": "驱蚊与溃疡药", "amount": 51.43, "currency": "CNY", "category": "药品" }
+    ]
+  },
+  {
+    "date": 15,
+    "title": "泰餐课预定与榴莲",
+    "items": [
+      { "name": "水两瓶", "amount": 22, "currency": "THB", "category": "饮料" },
+      { "name": "打车去塔佩门", "amount": 108, "currency": "THB", "category": "交通" },
+      { "name": "打车回酒店", "amount": 83.22, "currency": "THB", "category": "交通" },
+      { "name": "眼镜布", "amount": 8.5, "currency": "THB", "category": "日用" },
+      { "name": "日料晚餐", "amount": 571, "currency": "THB", "category": "餐饮" },
+      { "name": "榴莲", "amount": 340, "currency": "THB", "category": "水果" },
+      { "name": "草莓冰淇淋", "amount": 99, "currency": "THB", "category": "零食" },
+      { "name": "预定泰餐课程", "amount": 368.6, "currency": "CNY", "category": "娱乐" }
+    ]
+  },
+  {
+    "date": 16,
+    "title": "MAYA 补给与红酒",
+    "items": [
+      { "name": "咖啡", "amount": 90, "currency": "THB", "category": "饮料" },
+      { "name": "马杀鸡", "amount": 650, "currency": "THB", "category": "娱乐" },
+      { "name": "泰tea", "amount": 45, "currency": "THB", "category": "饮料" },
+      { "name": "红酒", "amount": 180, "currency": "THB", "category": "饮料" },
+      { "name": "MAYA超市", "amount": 185.6, "currency": "CNY", "category": "购物" },
+      { "name": "薯条", "amount": 10.4, "currency": "CNY", "category": "零食" },
+      { "name": "药品", "amount": 55.33, "currency": "CNY", "category": "药品" },
+      { "name": "Grab打车", "amount": 62, "currency": "THB", "category": "交通" },
+      { "name": "两瓶水", "amount": 4.72, "currency": "CNY", "category": "饮料" }
+    ]
+  },
+  {
+    "date": 17,
+    "title": "全天运动与燕窝",
+    "items": [
+      { "name": "早晨6点网球课", "amount": 700, "currency": "THB", "category": "运动" },
+      { "name": "烤猪肉片", "amount": 5, "currency": "THB", "category": "餐饮" },
+      { "name": "三明治", "amount": 25, "currency": "THB", "category": "餐饮" },
+      { "name": "豆浆", "amount": 7, "currency": "THB", "category": "饮料" },
+      { "name": "椰子水2瓶", "amount": 39, "currency": "THB", "category": "饮料" },
+      { "name": "打车到餐厅", "amount": 56, "currency": "THB", "category": "交通" },
+      { "name": "吃饭", "amount": 750, "currency": "THB", "category": "餐饮" },
+      { "name": "冰激凌", "amount": 250, "currency": "THB", "category": "零食" },
+      { "name": "打车回来", "amount": 10.95, "currency": "CNY", "category": "交通" },
+      { "name": "打车去网球场", "amount": 84, "currency": "THB", "category": "交通" },
+      { "name": "网球课", "amount": 1100, "currency": "THB", "category": "运动" },
+      { "name": "1瓶水", "amount": 10, "currency": "THB", "category": "饮料" },
+      { "name": "打车吃燕窝", "amount": 43, "currency": "THB", "category": "交通" },
+      { "name": "燕窝", "amount": 80, "currency": "THB", "category": "餐饮" },
+      { "name": "打车回酒店", "amount": 39, "currency": "THB", "category": "交通" },
+      { "name": "两瓶水", "amount": 22, "currency": "THB", "category": "饮料" }
+    ]
+  },
+  {
+    "date": 18,
+    "title": "网球课与精致餐饮",
+    "items": [
+      { "name": "早晨6点网球课", "amount": 700, "currency": "THB", "category": "运动" },
+      { "name": "打车去球场", "amount": 98, "currency": "THB", "category": "交通" },
+      { "name": "打车去Nana Bakery", "amount": 70, "currency": "THB", "category": "交通" },
+      { "name": "早餐", "amount": 744, "currency": "THB", "category": "餐饮" },
+      { "name": "打车去餐馆", "amount": 77, "currency": "THB", "category": "交通" },
+      { "name": "午饭Kiew Kai Ka", "amount": 1394, "currency": "THB", "category": "餐饮" },
+      { "name": "木头刮板", "amount": 55, "currency": "THB", "category": "购物" },
+      { "name": "打车回Cafe", "amount": 31, "currency": "THB", "category": "交通" },
+      { "name": "打车去网球", "amount": 41, "currency": "THB", "category": "交通" },
+      { "name": "网球课", "amount": 900, "currency": "THB", "category": "运动" },
+      { "name": "1瓶水", "amount": 10, "currency": "THB", "category": "饮料" },
+      { "name": "打车吃燕窝", "amount": 43, "currency": "THB", "category": "交通" },
+      { "name": "燕窝", "amount": 80, "currency": "THB", "category": "餐饮" },
+      { "name": "打车回Cafe", "amount": 39, "currency": "THB", "category": "交通" },
+      { "name": "两瓶水", "amount": 22, "currency": "THB", "category": "饮料" }
+    ]
+  },
+  {
+    "date": 19,
+    "title": "瀑布、象与按摩",
+    "items": [
+      { "name": "粘粘瀑布一日游", "amount": 270.48, "currency": "CNY", "category": "娱乐" },
+      { "name": "手机袋+柚子", "amount": 120, "currency": "THB", "category": "购物" },
+      { "name": "柚子+虾片", "amount": 125, "currency": "THB", "category": "零食" },
+      { "name": "豪华按摩", "amount": 4343.13, "currency": "THB", "category": "娱乐" },
+      { "name": "买衣服", "amount": 990, "currency": "THB", "category": "购物" },
+      { "name": "买袜子", "amount": 200, "currency": "THB", "category": "购物" },
+      { "name": "打车去披萨店", "amount": 102, "currency": "THB", "category": "交通" },
+      { "name": "披萨", "amount": 990, "currency": "THB", "category": "餐饮" },
+      { "name": "打车去网球场", "amount": 58, "currency": "THB", "category": "交通" },
+      { "name": "网球场租用", "amount": 1110, "currency": "THB", "category": "运动" },
+      { "name": "打车回酒店", "amount": 204, "currency": "THB", "category": "交通" },
+      { "name": "西瓜等水果", "amount": 100, "currency": "THB", "category": "水果" }
+    ]
+  },
+  {
+    "date": 20,
+    "title": "网球、拍照与宁曼路",
+    "items": [
+      { "name": "打车去网球场", "amount": 56, "currency": "THB", "category": "交通" },
+      { "name": "早晨网球", "amount": 700, "currency": "THB", "category": "运动" },
+      { "name": "打车去喝咖啡", "amount": 66, "currency": "THB", "category": "交通" },
+      { "name": "咖啡", "amount": 100, "currency": "THB", "category": "饮料" },
+      { "name": "面包", "amount": 165, "currency": "THB", "category": "餐饮" },
+      { "name": "711买牙膏和剃须刀", "amount": 61, "currency": "THB", "category": "日用" },
+      { "name": "买花", "amount": 150, "currency": "THB", "category": "其他" },
+      { "name": "买椰子水3瓶", "amount": 75, "currency": "THB", "category": "饮料" },
+      { "name": "酸奶碗", "amount": 119, "currency": "THB", "category": "零食" },
+      { "name": "打车去宁曼一号", "amount": 132, "currency": "THB", "category": "交通" },
+      { "name": "拍照", "amount": 950, "currency": "CNY", "category": "娱乐" },
+      { "name": "打车去网球场", "amount": 66, "currency": "THB", "category": "交通" },
+      { "name": "回来到epilogue cafe", "amount": 94, "currency": "THB", "category": "交通" },
+      { "name": "网球", "amount": 900, "currency": "THB", "category": "运动" },
+      { "name": "牛肉面", "amount": 60, "currency": "THB", "category": "餐饮" },
+      { "name": "鸡肉面", "amount": 50, "currency": "THB", "category": "餐饮" },
+      { "name": "香蕉饼", "amount": 35, "currency": "THB", "category": "零食" },
+      { "name": "柚子西瓜", "amount": 80, "currency": "THB", "category": "水果" },
+      { "name": "泡面", "amount": 20, "currency": "THB", "category": "零食" },
+      { "name": "水", "amount": 22, "currency": "THB", "category": "饮料" },
+      { "name": "方便面", "amount": 30, "currency": "THB", "category": "零食" },
+      { "name": "小衣服", "amount": 99, "currency": "THB", "category": "购物" }
+    ]
+  },
+  {
+    "date": 21,
+    "title": "运动、咖啡与购物",
+    "items": [
+      { "name": "打车去网球场", "amount": 77, "currency": "THB", "category": "交通" },
+      { "name": "早晨网球课", "amount": 700, "currency": "THB", "category": "运动" },
+      { "name": "打车回来", "amount": 73, "currency": "THB", "category": "交通" },
+      { "name": "早饭鸡蛋和面包", "amount": 0, "currency": "THB", "category": "餐饮" },
+      { "name": "打车来到konjohn咖啡店", "amount": 124, "currency": "THB", "category": "交通" },
+      { "name": "咖啡2杯", "amount": 110, "currency": "THB", "category": "饮料" },
+      { "name": "打碎杯子", "amount": 50, "currency": "THB", "category": "其他" },
+      { "name": "Caramel macchiato", "amount": 65, "currency": "THB", "category": "饮料" },
+      { "name": "马杀鸡", "amount": 1990, "currency": "THB", "category": "娱乐" },
+      { "name": "睡眠喷雾", "amount": 250, "currency": "THB", "category": "日用" },
+      { "name": "俩雪糕", "amount": 60, "currency": "THB", "category": "零食" },
+      { "name": "碗", "amount": 200, "currency": "THB", "category": "购物" },
+      { "name": "打车去mac cafe", "amount": 56, "currency": "THB", "category": "交通" },
+      { "name": "Bear一瓶", "amount": 69, "currency": "THB", "category": "饮料" },
+      { "name": "柚子*4+西瓜*1", "amount": 100, "currency": "THB", "category": "水果" },
+      { "name": "晚饭", "amount": 701, "currency": "THB", "category": "餐饮" },
+      { "name": "方便面薯片", "amount": 36, "currency": "THB", "category": "零食" },
+      { "name": "布丁", "amount": 20, "currency": "THB", "category": "零食" }
+    ]
+  },
+  {
+    "date": 22,
+    "title": "归程结算",
+    "items": [
+      { "name": "回程机票", "amount": 5386, "currency": "CNY", "category": "交通" },
+      { "name": "住宿结算(21-22)", "amount": 1974.86, "currency": "CNY", "category": "住宿" },
+      { "name": "打车去机场", "amount": 253, "currency": "THB", "category": "交通" },
+      { "name": "两杯澳白", "amount": 240, "currency": "THB", "category": "饮料" },
+      { "name": "小说《The Crimsons》", "amount": 265, "currency": "THB", "category": "购物" },
+      { "name": "Coconut Milk & Tomyum", "amount": 120, "currency": "THB", "category": "其他" }
+    ]
+  }
+]
