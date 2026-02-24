@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026清迈旅行全记录 - 带日期标注</title>
+    <title>2026旅行全记录 - 分类修正紧凑版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;800&family=Noto+Sans+SC:wght@300;500;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;800&family=Noto+Sans+SC:wght@400;900&display=swap');
         
         body {
             font-family: 'Noto Sans SC', sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
+            touch-action: manipulation;
         }
 
         .mono { font-family: 'JetBrains Mono', monospace; }
@@ -19,43 +20,38 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
+            gap: 3px;
         }
 
         .day-node {
-            aspect-ratio: 1/1.1;
-            border-radius: 12px;
-            padding: 6px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            aspect-ratio: 1/1.2;
+            border-radius: 6px;
+            padding: 3px;
+            transition: all 0.2s ease;
             cursor: pointer;
-            border: 1px solid #eef2f6;
+            border: 1px solid #f1f5f9;
             background: white;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
         }
 
         .day-node:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
-            z-index: 20;
+            transform: scale(1.03);
+            z-index: 10;
         }
 
         .day-node.active {
-            border: 3px solid #6366f1 !important;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            border: 2px solid #6366f1 !important;
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.2);
         }
 
-        /* Heatmap levels based on spending */
+        /* 消费强度色彩 */
         .heat-0 { color: #cbd5e1; }
-        .heat-1 { background: #f0f9ff; color: #0369a1; }
-        .heat-2 { background: #e0f2fe; color: #075985; }
-        .heat-3 { background: #bae6fd; color: #0c4a6e; }
-        .heat-4 { background: #fee2e2; color: #991b1b; }
-        .heat-5 { background: #fecaca; color: #7f1d1d; }
-
-        #pie-svg { transform: rotate(-90deg); transition: all 0.6s ease; }
+        .heat-1 { background: #f0fdf4; color: #166534; } 
+        .heat-2 { background: #f0f9ff; color: #075985; } 
+        .heat-3 { background: #eef2ff; color: #3730a3; } 
+        .heat-4 { background: #fff1f2; color: #9f1239; } 
 
         .category-items {
             max-height: 0;
@@ -64,79 +60,78 @@
         }
 
         .category-card.open .category-items {
-            max-height: 1500px;
+            max-height: 2000px;
         }
 
+        #pie-svg { transform: rotate(-90deg); }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
     </style>
 </head>
-<body class="p-4 md:p-8" onclick="resetView()">
+<body class="p-2 md:p-6" onclick="resetView()">
     <div class="max-w-5xl mx-auto" onclick="event.stopPropagation()">
         
-        <!-- Header -->
-        <header class="mb-8 flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-6 rounded-[32px] shadow-sm border border-slate-100">
+        <!-- 顶部概览 -->
+        <header class="mb-4 flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
             <div>
-                <h1 class="text-3xl font-black text-slate-900 tracking-tight italic">CHIANG MAI <span class="text-indigo-600">2026</span></h1>
-                <p class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em] mt-1">Travel Expenditure Ledger</p>
+                <h1 class="text-xl font-black text-slate-900 italic tracking-tight uppercase">Trip Ledger <span class="text-indigo-600">2026</span></h1>
+                <p class="text-slate-400 text-[8px] font-bold uppercase tracking-[0.4em]">Chiang Mai & Phuket</p>
             </div>
             <div class="flex items-center gap-6">
                 <div class="text-right">
-                    <p class="text-[9px] font-black text-slate-400 mb-1 uppercase">Total Spending</p>
-                    <div class="flex items-center gap-4">
-                        <span id="grand-total-thb" class="text-2xl font-black text-slate-800 mono">฿0</span>
-                        <div class="h-6 w-[1.5px] bg-slate-100"></div>
-                        <span id="grand-total-cny" class="text-2xl font-black text-indigo-600 mono">¥0</span>
+                    <p class="text-[8px] font-black text-slate-300 uppercase tracking-tighter">Grand Total</p>
+                    <div class="flex items-center gap-3">
+                        <span id="grand-total-thb" class="text-lg font-black text-slate-800 mono">0</span>
+                        <span id="grand-total-cny" class="text-lg font-black text-indigo-500 mono">0</span>
                     </div>
                 </div>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
             
-            <!-- Calendar Section -->
-            <div class="lg:col-span-6">
-                <div class="bg-white rounded-[32px] p-6 border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-xl font-black text-slate-800 italic">2月 <span class="text-slate-300 font-light">Feb</span></h2>
-                        <span class="text-[9px] font-bold text-slate-400 bg-slate-50 px-3 py-1 rounded-full uppercase">Tap date for details</span>
+            <!-- 左侧：紧凑型日历 -->
+            <div class="lg:col-span-4">
+                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-base font-black text-slate-800 italic">2月 <span class="text-slate-300 font-light">Feb</span></h2>
+                        <span class="text-[7px] font-bold text-indigo-400 bg-indigo-50 px-2 py-0.5 rounded uppercase tracking-widest">Select Date</span>
                     </div>
                     
-                    <div class="calendar-grid text-center text-[10px] font-black text-slate-300 mb-4 uppercase tracking-widest">
-                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                    <div class="calendar-grid text-center text-[7px] font-black text-slate-300 mb-3 uppercase">
+                        <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
                     </div>
                     
                     <div id="calendar-body" class="calendar-grid"></div>
                 </div>
             </div>
 
-            <!-- Detail Panel -->
-            <div class="lg:col-span-6">
-                <div id="info-panel" class="bg-white rounded-[40px] border border-slate-200 shadow-2xl overflow-hidden flex flex-col h-[780px] sticky top-8">
-                    <!-- Dynamic Header -->
-                    <div id="panel-header" class="p-8 bg-slate-900 text-white transition-all duration-500">
-                        <div class="flex justify-between items-start">
-                            <h3 id="panel-date" class="text-2xl font-black italic">旅程汇总</h3>
+            <!-- 右侧：详情面板 -->
+            <div class="lg:col-span-8">
+                <div id="info-panel" class="bg-white rounded-[28px] border border-slate-200 shadow-xl overflow-hidden flex flex-col h-[650px] sticky top-4">
+                    <!-- 面板头部 -->
+                    <div id="panel-header" class="p-6 bg-slate-900 text-white transition-all duration-300">
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <h3 id="panel-date" class="text-lg font-black italic">旅程全汇总</h3>
+                                <p id="panel-desc" class="text-[8px] opacity-60 font-medium uppercase tracking-widest mt-1">Full Summary Analysis</p>
+                            </div>
                             <div class="text-right">
-                                <p id="panel-total-thb" class="text-2xl font-black mono leading-none mb-1">฿0</p>
-                                <p id="panel-total-cny" class="text-2xl font-black mono text-indigo-400 leading-none">¥0</p>
+                                <p id="panel-total-thb" class="text-xl font-black mono leading-none mb-1">0</p>
+                                <p id="panel-total-cny" class="text-lg font-black mono text-indigo-400 leading-none">0</p>
                             </div>
                         </div>
-                        <p id="panel-desc" class="text-[10px] opacity-60 font-bold mt-4 uppercase tracking-widest">Global summary of all expenses</p>
                     </div>
 
-                    <!-- Statistics View -->
-                    <div class="p-6 flex flex-col items-center bg-slate-50/80 border-b border-slate-100">
-                        <div class="relative w-36 h-36">
+                    <!-- 图表区域 -->
+                    <div class="p-4 flex flex-col sm:flex-row items-center gap-6 bg-slate-50/50 border-b border-slate-100">
+                        <div class="relative w-20 h-20 shrink-0">
                             <svg id="pie-svg" viewBox="0 0 100 100" class="w-full h-full"></svg>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <span class="text-[9px] font-black text-slate-300 italic">STATS</span>
-                            </div>
                         </div>
-                        <div id="chart-legend" class="grid grid-cols-2 gap-x-6 gap-y-1.5 mt-6 text-[10px] font-black w-full"></div>
+                        <div id="chart-legend" class="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1 text-[7px] font-bold w-full"></div>
                     </div>
 
-                    <!-- Categorized Item List -->
+                    <!-- 消费条目列表 -->
                     <div id="items-list" class="flex-grow overflow-y-auto p-4 space-y-3 bg-white"></div>
                 </div>
             </div>
@@ -147,86 +142,99 @@
     <script>
         const exchangeRate = 0.205; 
         const cats = {
+            "大交通": { icon: "✈️", color: "#ef4444" },
+            "打车": { icon: "🚕", color: "#3b82f6" },
             "餐饮": { icon: "🍜", color: "#f59e0b" },
-            "交通": { icon: "✈️", color: "#3b82f6" },
             "购物": { icon: "🛍️", color: "#10b981" },
             "娱乐": { icon: "🎭", color: "#8b5cf6" },
             "运动": { icon: "🎾", color: "#6366f1" },
             "住宿": { icon: "🏨", color: "#14b8a6" },
             "饮料": { icon: "🥤", color: "#0ea5e9" },
             "零食": { icon: "🥨", color: "#fb923c" },
-            "门票": { icon: "🎫", color: "#ec4899" },
             "日用": { icon: "🧴", color: "#64748b" },
             "水果": { icon: "🥭", color: "#84cc16" },
-            "药品": { icon: "💊", color: "#ef4444" },
             "其他": { icon: "📦", color: "#94a3b8" },
-            "通信": { icon: "📶", color: "#06b6d4" }
+            "通信": { icon: "📶", color: "#06b6d4" },
+            "门票": { icon: "🎫", color: "#ec4899" }
         };
 
+        // 格式化数字：k 或 w
+        function formatNum(num, currency = 'THB') {
+            if (num === 0) return '0';
+            if (currency === 'CNY') {
+                if (num >= 10000) return (num / 10000).toFixed(1) + 'w';
+                if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+                return Math.round(num);
+            } else {
+                if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+                return Math.round(num);
+            }
+        }
+
         const rawData = [
-            { date: 11, title: "初入清迈", items: [["去程机票钱(1)", 2679, "CNY", "交通"], ["电话卡", 399, "THB", "通信"], ["打车 Taxi", 180, "THB", "交通"]] },
-            { date: 12, title: "初到清迈", items: [["去程机票钱(2)", 2770, "CNY", "交通"], ["机场接机/打车", 466, "THB", "交通"], ["Pizza My Heart", 830, "THB", "餐饮"], ["Poopoopaper", 120, "THB", "购物"], ["Soap for Soul", 670, "THB", "购物"], ["Beak Design", 952, "THB", "购物"], ["7-Eleven汇总", 138, "THB", "零食"], ["泰式按摩", 600, "THB", "娱乐"], ["breakfast", 199, "THB", "餐饮"]] },
-            { date: 13, title: "兰纳拍照日", items: [["早晨6点网球课", 700, "THB", "运动"], ["早饭", 259, "THB", "餐饮"], ["打车去Lanna", 89, "THB", "交通"], ["椰子水3瓶", 75, "THB", "饮料"], ["拍照服务费", 500, "CNY", "娱乐"], ["Lanna门票", 300, "THB", "门票"], ["打车去Kaosoy", 104, "THB", "交通"], ["泰茶", 75, "THB", "饮料"], ["晚饭", 540, "THB", "餐饮"], ["711护发油等", 66.19, "CNY", "日用"], ["打车汇总", 222, "THB", "交通"], ["711水+薯片", 10.26, "CNY", "零食"], ["玉米", 10, "THB", "零食"]] },
-            { date: 14, title: "竹子市场购物日", items: [["早晨6点网球课", 700, "THB", "运动"], ["打车去球场", 81, "THB", "交通"], ["打车去市场", 116, "THB", "交通"], ["荷叶包", 20, "THB", "餐饮"], ["猪肉粥", 50, "THB", "餐饮"], ["沙拉", 55, "THB", "餐饮"], ["果汁", 50, "THB", "饮料"], ["小柿子", 50, "THB", "水果"], ["有机牛奶", 45, "THB", "饮料"], ["面包", 236, "THB", "餐饮"], ["布丁+酸奶", 80, "THB", "零食"], ["裙子", 500, "THB", "购物"], ["笔记本", 280, "THB", "购物"], ["咖啡", 170, "THB", "饮料"], ["巧克力面包*2", 96, "THB", "零食"], ["双条车", 140, "THB", "交通"], ["奈飞会员", 12.7, "CNY", "娱乐"], ["摩的", 90, "THB", "交通"], ["吃饭", 57.69, "CNY", "餐饮"], ["买衣服(支付宝)", 316, "CNY", "购物"], ["面膜", 41, "CNY", "日用"], ["买衣服(现金)", 780, "THB", "购物"], ["超市购物", 211.56, "CNY", "购物"], ["榴莲", 87.65, "CNY", "水果"], ["突突车", 250, "THB", "交通"], ["水2瓶", 22, "THB", "饮料"], ["驱蚊与溃疡药", 51.43, "CNY", "药品"]] },
-            { date: 15, title: "泰餐课预定与榴莲", items: [["水两瓶", 22, "THB", "饮料"], ["打车去塔佩门", 108, "THB", "交通"], ["打车回酒店", 83.22, "THB", "交通"], ["眼镜布", 8.5, "THB", "日用"], ["日料晚餐", 571, "THB", "餐饮"], ["榴莲", 340, "THB", "水果"], ["草莓冰淇淋", 99, "THB", "零食"], ["预定泰餐课程", 368.6, "CNY", "娱乐"]] },
-            { date: 16, title: "MAYA 补给与红酒", items: [["咖啡", 90, "THB", "饮料"], ["马杀鸡", 650, "THB", "娱乐"], ["泰tea", 45, "THB", "饮料"], ["红酒", 180, "THB", "饮料"], ["MAYA超市", 185.6, "CNY", "购物"], ["薯条", 10.4, "CNY", "零食"], ["药品", 55.33, "CNY", "药品"], ["Grab打车", 62, "THB", "交通"], ["两瓶水", 4.72, "CNY", "饮料"]] },
-            { date: 17, title: "全天运动与燕窝", items: [["早晨6点网球课", 700, "THB", "运动"], ["烤猪肉片", 5, "THB", "餐饮"], ["三明治", 25, "THB", "餐饮"], ["豆浆", 7, "THB", "饮料"], ["椰子水2瓶", 39, "THB", "饮料"], ["打车到餐厅", 56, "THB", "交通"], ["吃饭", 750, "THB", "餐饮"], ["冰激凌", 250, "THB", "零食"], ["打车回来", 10.95, "CNY", "交通"], ["打车去网球场", 84, "THB", "交通"], ["网球课", 1100, "THB", "运动"], ["1瓶水", 10, "THB", "饮料"], ["打车吃燕窝", 43, "THB", "交通"], ["燕窝", 80, "THB", "餐饮"], ["打车回酒店", 39, "THB", "交通"], ["两瓶水", 22, "THB", "饮料"]] },
-            { date: 18, title: "网球课与精致餐饮", items: [["早晨6点网球课", 700, "THB", "运动"], ["打车去球场", 98, "THB", "交通"], ["打车去Nana Bakery", 70, "THB", "交通"], ["早餐", 744, "THB", "餐饮"], ["打车去餐馆", 77, "THB", "交通"], ["午饭Kiew Kai Ka", 1394, "THB", "餐饮"], ["木头刮板", 55, "THB", "购物"], ["打车回Cafe", 31, "THB", "交通"], ["打车去网球", 41, "THB", "交通"], ["网球课", 900, "THB", "运动"], ["1瓶水", 10, "THB", "饮料"], ["打车吃燕窝", 43, "THB", "交通"], ["燕窝", 80, "THB", "餐饮"], ["打车回Cafe", 39, "THB", "交通"], ["两瓶水", 22, "THB", "饮料"]] },
-            { date: 19, title: "瀑布、象与按摩", items: [["粘粘瀑布一日游", 270.48, "CNY", "娱乐"], ["手机袋+柚子", 120, "THB", "购物"], ["柚子+虾片", 125, "THB", "零食"], ["豪华按摩", 4343.13, "THB", "娱乐"], ["买衣服", 990, "THB", "购物"], ["买袜子", 200, "THB", "购物"], ["打车去披萨店", 102, "THB", "交通"], ["披萨", 990, "THB", "餐饮"], ["打车去网球场", 58, "THB", "交通"], ["网球场租用", 1110, "THB", "运动"], ["打车回酒店", 204, "THB", "交通"], ["西瓜等水果", 100, "THB", "水果"]] },
-            { date: 20, title: "网球、拍照与宁曼路", items: [["打车去网球场", 56, "THB", "交通"], ["早晨网球", 700, "THB", "运动"], ["打车去喝咖啡", 66, "THB", "交通"], ["咖啡", 100, "THB", "饮料"], ["面包", 165, "THB", "餐饮"], ["711买牙膏和剃须刀", 61, "THB", "日用"], ["买花", 150, "THB", "其他"], ["买椰子水3瓶", 75, "THB", "饮料"], ["酸奶碗", 119, "THB", "零食"], ["打车去宁曼一号", 132, "THB", "交通"], ["拍照", 950, "CNY", "娱乐"], ["打车去网球场", 66, "THB", "交通"], ["回来到epilogue cafe", 94, "THB", "交通"], ["网球", 900, "THB", "运动"], ["牛肉面", 60, "THB", "餐饮"], ["鸡肉面", 50, "THB", "餐饮"], ["香蕉饼", 35, "THB", "零食"], ["柚子西瓜", 80, "THB", "水果"], ["泡面", 20, "THB", "零食"], ["水", 22, "THB", "饮料"], ["方便面", 30, "THB", "零食"], ["小衣服", 99, "THB", "购物"]] },
-            { date: 21, title: "运动、咖啡与购物", items: [["打车去网球场", 77, "THB", "交通"], ["早晨网球课", 700, "THB", "运动"], ["打车回来", 73, "THB", "交通"], ["早饭鸡蛋和面包", 0, "THB", "餐饮"], ["打车来到konjohn咖啡店", 124, "THB", "交通"], ["咖啡2杯", 110, "THB", "饮料"], ["打碎杯子", 50, "THB", "其他"], ["Caramel macchiato", 65, "THB", "饮料"], ["马杀鸡", 1990, "THB", "娱乐"], ["睡眠喷雾", 250, "THB", "日用"], ["俩雪糕", 60, "THB", "零食"], ["碗", 200, "THB", "购物"], ["打车去mac cafe", 56, "THB", "交通"], ["Bear一瓶", 69, "THB", "饮料"], ["柚子*4+西瓜*1", 100, "THB", "水果"], ["晚饭", 701, "THB", "餐饮"], ["方便面薯片", 36, "THB", "零食"], ["布丁", 20, "THB", "零食"]] },
-            { date: 22, title: "归程结算", items: [["回程机票", 5386, "CNY", "交通"], ["住宿结算(21-22)", 1974.86, "CNY", "住宿"], ["打车去机场", 253, "THB", "交通"], ["两杯澳白", 240, "THB", "饮料"], ["小说《The Crimsons》", 265, "THB", "购物"], ["Coconut Milk & Tomyum", 120, "THB", "其他"]] }
+            { date: 11, items: [["去程机票(1)", 2679, "CNY", "大交通"], ["电话卡", 399, "THB", "通信"], ["打车 Taxi", 180, "THB", "打车"]] },
+            { date: 12, items: [["去程机票(2)", 2770, "CNY", "大交通"], ["接机打车", 466, "THB", "打车"], ["Pizza My Heart", 830, "THB", "餐饮"], ["购物合集", 1742, "THB", "购物"], ["马杀鸡", 600, "THB", "娱乐"], ["早餐", 199, "THB", "餐饮"], ["7-11零食", 138, "THB", "零食"]] },
+            { date: 13, items: [["网球课", 700, "THB", "运动"], ["餐饮汇总", 799, "THB", "餐饮"], ["打车汇总", 415, "THB", "打车"], ["拍照费", 500, "CNY", "娱乐"], ["Lanna门票", 300, "THB", "门票"], ["饮料", 150, "THB", "饮料"], ["护发油", 66.19, "CNY", "日用"], ["711零食", 10.26, "CNY", "零食"]] },
+            { date: 14, items: [["网球课", 700, "THB", "运动"], ["打车汇总", 677, "THB", "打车"], ["餐饮", 361, "THB", "餐饮"], ["衣服", 1560, "THB", "购物"], ["衣服(ZFB)", 316, "CNY", "购物"], ["超市", 211.56, "CNY", "购物"], ["榴莲", 87.65, "CNY", "水果"], ["饮料", 287, "THB", "饮料"], ["零食", 176, "THB", "零食"], ["Netflix", 12.7, "CNY", "娱乐"], ["日用", 92.43, "CNY", "日用"]] },
+            { date: 15, items: [["打车汇总", 191, "THB", "打车"], ["日料晚饭", 571, "THB", "餐饮"], ["榴莲", 340, "THB", "水果"], ["泰餐课预定", 368.6, "CNY", "娱乐"], ["饮料", 30.5, "THB", "饮料"]] },
+            { date: 16, items: [["马杀鸡", 650, "THB", "娱乐"], ["MAYA超市", 185.6, "CNY", "购物"], ["打车", 62, "THB", "打车"], ["饮料", 315, "THB", "饮料"], ["其他/药品", 65.73, "CNY", "其他"]] },
+            { date: 17, items: [["网球课", 1800, "THB", "运动"], ["打车汇总", 140, "THB", "打车"], ["打车回程", 10.95, "CNY", "打车"], ["餐饮汇总", 842, "THB", "餐饮"], ["饮料", 69, "THB", "饮料"], ["零食", 250, "THB", "零食"]] },
+            { date: 18, items: [["网球课", 1600, "THB", "运动"], ["打车汇总", 361, "THB", "打车"], ["Kiew Kai Ka", 1394, "THB", "餐饮"], ["餐饮/燕窝", 824, "THB", "餐饮"], ["购物", 55, "THB", "购物"], ["饮料", 32, "THB", "饮料"]] },
+            { date: 19, items: [["豪华SPA", 4343, "THB", "娱乐"], ["一日游", 270, "CNY", "娱乐"], ["打车汇总", 364, "THB", "打车"], ["披萨", 990, "THB", "餐饮"], ["衣服鞋袜", 1310, "THB", "购物"], ["网球场租", 1110, "THB", "运动"], ["水果", 100, "THB", "水果"], ["零食", 125, "THB", "零食"]] },
+            { date: 20, items: [["拍照服务", 950, "CNY", "娱乐"], ["网球课", 1600, "THB", "运动"], ["打车汇总", 414, "THB", "打车"], ["餐饮", 275, "THB", "餐饮"], ["饮料", 175, "THB", "饮料"], ["零食", 204, "THB", "零食"], ["衣服", 99, "THB", "购物"], ["日用", 61, "THB", "日用"]] },
+            { date: 21, items: [["网球", 700, "THB", "运动"], ["马杀鸡", 1990, "THB", "娱乐"], ["打车汇总", 206, "THB", "打车"], ["晚饭", 701, "THB", "餐饮"], ["购物", 450, "THB", "购物"], ["饮料", 244, "THB", "饮料"], ["零食", 116, "THB", "零食"]] },
+            { date: 22, items: [
+                ["回程机票", 5386, "CNY", "大交通"], ["住宿结算", 1974.86, "CNY", "住宿"],
+                ["打车回家", 146.59, "CNY", "打车"], ["打车去机场", 253, "THB", "打车"],
+                ["巧克力", 1495, "THB", "购物"], ["小说《绯红家族》", 265, "THB", "购物"], ["普吉布料", 370, "THB", "购物"],
+                ["曼谷面膜", 1152, "THB", "日用"], ["妈妈鸡肉面", 306.9, "THB", "餐饮"], ["加蛋/可颂/餐饮", 868, "THB", "餐饮"],
+                ["Coconut Milk", 60, "THB", "饮料"], ["两杯澳白", 240, "THB", "饮料"], 
+                ["Tomyum", 60, "THB", "零食"], ["买瓶水", 3, "CNY", "饮料"]
+            ] }
         ];
 
-        // Process data into enriched objects
         const processed = rawData.map(d => {
-            const items = d.items.map(it => ({
-                name: it[0], val: it[1], unit: it[2], cat: it[3],
-                date: d.date,
-                thb: it[2] === "THB" ? it[1] : it[1] / exchangeRate,
-                cny: it[2] === "CNY" ? it[1] : it[1] * exchangeRate
-            }));
-            
+            const items = d.items.map(it => {
+                const isCNY = it[2] === "CNY";
+                return {
+                    name: it[0], val: it[1], unit: it[2], cat: it[3], date: d.date,
+                    thb: isCNY ? it[1] / exchangeRate : it[1],
+                    cny: isCNY ? it[1] : it[1] * exchangeRate
+                };
+            });
             const grouped = {};
             items.forEach(it => {
                 if(!grouped[it.cat]) grouped[it.cat] = { total: 0, list: [] };
                 grouped[it.cat].total += it.thb;
                 grouped[it.cat].list.push(it);
             });
-            Object.values(grouped).forEach(g => g.list.sort((a,b) => b.thb - a.thb));
-
-            return {
-                ...d,
-                items,
-                cats: Object.entries(grouped).sort((a,b) => b[1].total - a[1].total),
-                totalTHB: items.reduce((acc, it) => acc + it.thb, 0)
-            };
+            return { ...d, items, cats: Object.entries(grouped), totalTHB: items.reduce((a,i)=>a+i.thb,0) };
         });
 
-        const grandTotalTHB = processed.reduce((acc, d) => acc + d.totalTHB, 0);
+        const grandTotalTHB = processed.reduce((a, d) => a + d.totalTHB, 0);
 
         function renderCalendar() {
             const container = document.getElementById('calendar-body');
             container.innerHTML = '';
-            for (let i = 1; i <= 28; i++) {
+            for (let i = 11; i <= 24; i++) {
                 const data = processed.find(x => x.date === i);
                 const node = document.createElement('div');
-                const heat = data ? (data.totalTHB < 3000 ? 1 : data.totalTHB < 8000 ? 2 : data.totalTHB < 15000 ? 3 : data.totalTHB < 30000 ? 4 : 5) : 0;
-                node.className = `day-node heat-${heat}`;
+                const heat = data ? (data.totalTHB < 3000 ? 1 : data.totalTHB < 8000 ? 2 : data.totalTHB < 15000 ? 3 : 4) : 0;
+                node.className = `day-node heat-${heat} ${data ? '' : 'opacity-20'}`;
                 node.innerHTML = `
-                    <span class="text-[8px] font-black opacity-30 select-none">${i}</span>
+                    <span class="text-[7px] font-black opacity-30">${i}</span>
                     ${data ? `
-                        <div class="text-right">
-                            <p class="text-[9px] font-black mono leading-none mb-0.5">฿${Math.round(data.totalTHB)}</p>
-                            <p class="text-[7px] font-bold opacity-30 leading-none">¥${Math.round(data.totalTHB * exchangeRate)}</p>
+                        <div class="text-right flex flex-col items-end">
+                            <p class="text-[8px] font-black mono leading-none mb-0.5">฿${formatNum(data.totalTHB)}</p>
+                            <p class="text-[6px] font-bold opacity-30 leading-none">¥${formatNum(data.totalTHB * exchangeRate, 'CNY')}</p>
                         </div>
                     ` : ''}
                 `;
                 if(data) node.onclick = (e) => { e.stopPropagation(); updateDetail(i, node); };
                 container.appendChild(node);
             }
-            document.getElementById('grand-total-thb').innerText = `฿${Math.round(grandTotalTHB).toLocaleString()}`;
-            document.getElementById('grand-total-cny').innerText = `¥${Math.round(grandTotalTHB * exchangeRate).toLocaleString()}`;
+            document.getElementById('grand-total-thb').innerText = `฿${formatNum(grandTotalTHB)}`;
+            document.getElementById('grand-total-cny').innerText = `¥${formatNum(grandTotalTHB * exchangeRate, 'CNY')}`;
         }
 
         function drawPie(stats) {
@@ -242,16 +250,15 @@
                 circle.setAttribute("cx", "50"); circle.setAttribute("cy", "50"); circle.setAttribute("r", "40");
                 circle.setAttribute("fill", "transparent");
                 circle.setAttribute("stroke", cats[cat]?.color || "#cbd5e1");
-                circle.setAttribute("stroke-width", "10");
+                circle.setAttribute("stroke-width", "16");
                 circle.setAttribute("stroke-dasharray", `${percent * 251.2} 251.2`);
                 circle.setAttribute("stroke-dashoffset", -cumulative * 251.2);
-                circle.setAttribute("stroke-linecap", "round");
                 svg.appendChild(circle);
 
                 legend.innerHTML += `
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full shrink-0" style="background:${cats[cat]?.color}"></span>
-                        <span class="text-slate-500 truncate italic">${cat} ${Math.round(percent*100)}%</span>
+                    <div class="flex items-center gap-1.5 whitespace-nowrap">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background:${cats[cat]?.color}"></span>
+                        <span class="text-slate-400 italic">${cat} ${Math.round(percent*100)}%</span>
                     </div>
                 `;
                 cumulative += percent;
@@ -265,10 +272,9 @@
 
             const header = document.getElementById('panel-header');
             header.style.backgroundColor = el ? window.getComputedStyle(el).backgroundColor : "#0f172a";
-            header.style.color = (data && data.totalTHB > 15000) ? '#fff' : (el ? '#0f172a' : '#fff');
+            header.style.color = (data && data.totalTHB > 8000) ? '#fff' : (el ? '#1e293b' : '#fff');
 
             document.getElementById('panel-date').innerText = date ? `2月${date}日` : "旅程全汇总";
-            document.getElementById('panel-desc').innerText = date ? data.title : "Global Expenditure Review (2026)";
             document.getElementById('panel-total-thb').innerText = `฿${Math.round(data?.totalTHB || grandTotalTHB).toLocaleString()}`;
             document.getElementById('panel-total-cny').innerText = `¥${Math.round((data?.totalTHB || grandTotalTHB) * exchangeRate).toLocaleString()}`;
 
@@ -281,8 +287,6 @@
                     if(!agg[c]) agg[c] = { total: 0, list: [] };
                     agg[c].total += d.total; agg[c].list.push(...d.list);
                 }));
-                // Sort the global aggregated list items by amount
-                Object.values(agg).forEach(v => v.list.sort((a,b) => b.thb - a.thb));
                 return Object.entries(agg).sort((a,b) => b[1].total - a[1].total);
             })();
 
@@ -290,32 +294,32 @@
             renderData.forEach(([cat, info]) => {
                 pieStats[cat] = info.total;
                 const card = document.createElement('div');
-                card.className = "category-card bg-slate-50 border border-slate-100 rounded-2xl overflow-hidden cursor-pointer hover:border-indigo-200 transition-all";
+                card.className = "category-card bg-slate-50 border border-slate-100 rounded-xl overflow-hidden cursor-pointer hover:border-indigo-100 transition-all";
                 card.onclick = (e) => { e.stopPropagation(); card.classList.toggle('open'); };
                 card.innerHTML = `
-                    <div class="p-4 flex items-center justify-between">
+                    <div class="p-3 flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <span class="text-2xl">${cats[cat]?.icon || '📦'}</span>
+                            <span class="text-xl">${cats[cat]?.icon || '📦'}</span>
                             <div>
-                                <h4 class="text-xs font-black text-slate-800">${cat}</h4>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase">${info.list.length} 条目</p>
+                                <h4 class="text-[9px] font-black text-slate-700">${cat}</h4>
+                                <p class="text-[7px] font-bold text-slate-400 italic">${info.list.length} Items</p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm font-black mono text-slate-900 leading-tight">฿${Math.round(info.total).toLocaleString()}</p>
-                            <p class="text-sm font-black mono text-indigo-500 leading-tight">¥${Math.round(info.total * exchangeRate).toLocaleString()}</p>
+                            <p class="text-xs font-black mono text-slate-800">฿${Math.round(info.total).toLocaleString()}</p>
+                            <p class="text-[9px] font-black mono text-indigo-500">¥${Math.round(info.total * exchangeRate).toLocaleString()}</p>
                         </div>
                     </div>
-                    <div class="category-items divide-y divide-slate-100 bg-white/60">
-                        ${info.list.map(it => `
-                            <div class="p-3 px-5 flex justify-between items-center">
+                    <div class="category-items divide-y divide-slate-100 bg-white">
+                        ${info.list.sort((a,b)=>b.thb-a.thb).map(it => `
+                            <div class="p-3 px-5 flex justify-between items-center hover:bg-slate-50">
                                 <div class="flex flex-col">
-                                    <span class="text-[10px] font-bold text-slate-600">${it.name}</span>
-                                    <span class="text-[8px] font-black text-indigo-400 uppercase tracking-tighter">📅 2月${it.date}日</span>
+                                    <span class="text-[9px] font-bold text-slate-600">${it.name}</span>
+                                    <span class="text-[7px] font-black text-indigo-300 uppercase">📅 2月${it.date}日</span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-[10px] font-black mono block">฿${Math.round(it.thb)}</span>
-                                    <span class="text-[9px] font-bold mono text-slate-300">¥${Math.round(it.cny)}</span>
+                                    <span class="text-[9px] font-black mono block">฿${Math.round(it.thb)}</span>
+                                    <span class="text-[7px] font-bold mono text-slate-200">¥${Math.round(it.cny)}</span>
                                 </div>
                             </div>
                         `).join('')}
